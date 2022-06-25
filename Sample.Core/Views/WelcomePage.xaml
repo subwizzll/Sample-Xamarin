@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:controls="clr-namespace:Sample.Core.Controls"
+                      xmlns:effects="clr-namespace:Sample.Core.Effects"
+                      xmlns:framework="clr-namespace:Sample.Core.Framework"
+                      xmlns:viewModels="clr-namespace:Sample.Core.ViewModels"
+                      xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+                      x:Class="Sample.Core.Views.WelcomePage"
+                      x:DataType="viewModels:WelcomeViewModel"
+                      x:TypeArguments="viewModels:WelcomeViewModel"
+                      NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <controls:NavBar Title="{Binding [Title]}"/>
+            <controls:BaseFrame Margin="16"
+                                Padding="8"
+                                HorizontalOptions="Center"
+                                BorderColor="Black"
+                                BorderWidth="8"
+                                CornerRadius="10"
+                                HasShadow="False">
+                <Button Text="{Binding [WelcomeButton]}"
+                        Command="{Binding GoToSampleListView}"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+            </controls:BaseFrame>
+        </StackLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>

@@ -1,0 +1,32 @@
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Sample.Core.Controls"
+             xmlns:viewModels="clr-namespace:MvvmCross.ViewModels;assembly=MvvmCross"
+             x:Class="Sample.Core.Controls.NavBar"
+             x:DataType="controls:NavBar"
+             BackgroundColor="Transparent">
+
+    <StackLayout Orientation="Horizontal"
+                 VerticalOptions="Start"
+                 HorizontalOptions="FillAndExpand"
+                 HeightRequest="48">
+
+        <!-- Navigation Icon -->
+        <ImageButton Style="{StaticResource NavBarButtonStyle}"
+                     Source="{Binding NavigationIcon}"
+                     Command="{Binding NavigationCommand}"/>
+
+        <!-- Header -->
+        <Label Text="{Binding Title}"
+               FontSize="18"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Center"/>
+
+        <!-- Right Icon -->
+        <ImageButton Style="{StaticResource NavBarButtonStyle}"
+                     Source="InfoIcon"
+                     Command="{Binding QuickActionsCommand}"
+                     IsVisible="{Binding QuickActionsIsVisible}"/>
+    </StackLayout>
+
+</ContentView>
