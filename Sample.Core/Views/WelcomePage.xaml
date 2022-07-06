@@ -24,7 +24,7 @@
                                 CornerRadius="10"
                                 HasShadow="False">
                 <Button Text="{Binding [WelcomeButton]}"
-                        Command="{Binding GoToSampleListView}"
+                        Command="{Binding GetTaxRateCommand}"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
             </controls:BaseFrame>
