@@ -1,10 +1,8 @@
 ﻿using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using Sample.Core.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using Sample.Core.Models;
 using Sample.Core.Service;
 
 namespace Sample.Core.ViewModels
@@ -23,11 +21,19 @@ namespace Sample.Core.ViewModels
             _taxService = taxService;
         }
 
+        TaxRateInfo _taxrate;
+        public TaxRateInfo TaxRateInfo
+        {
+            get => _taxrate;
+            set => SetProperty(ref _taxrate, value);
+        }
+
         IMvxAsyncCommand _getTaxRateCommand;
         public IMvxAsyncCommand GetTaxRateCommand => _getTaxRateCommand ??= new MvxAsyncCommand(async () =>
         {
-            var taxRate = await _taxService.GetTaxRate("28704");
-            Debug.WriteLine(taxRate.Rate.StateRate);
+            var taxRateResponse = await _taxService.GetTaxRate("28704");
+            TaxRateInfo = taxRateResponse.RateInfo;
+            Debug.WriteLine(taxRateResponse.RateInfo.StateRate);
         });
     }
 }
