@@ -20,13 +20,16 @@
                                 Padding="8"
                                 HorizontalOptions="Center"
                                 BorderColor="Black"
-                                BorderWidth="8"
+                                BorderWidth="2"
                                 CornerRadius="10"
-                                HasShadow="False">
-                <Button Text="{Binding [WelcomeButton]}"
-                        Command="{Binding GetTaxRateCommand}"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="CenterAndExpand" />
+                                HasShadow="True">
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="{Binding [WelcomeButton]}"
+                            Command="{Binding GetTaxRateCommand}"
+                            VerticalOptions="CenterAndExpand" 
+                            HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{Binding TaxRateInfo.StateRate}"/>
+                </StackLayout>
             </controls:BaseFrame>
         </StackLayout>
     </ContentPage.Content>

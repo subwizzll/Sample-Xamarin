@@ -4,6 +4,6 @@ namespace Sample.Core.Models
 {
     public class TaxRateResponse : HttpResponseMessage
     {
-        public TaxRate Rate { get; set; }
+        public TaxRateInfo RateInfo { get; set; }
     }
 }
