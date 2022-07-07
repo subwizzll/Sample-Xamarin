@@ -1,7 +1,10 @@
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Sample.Core.Framework.Attributes;
 using Sample.Core.Framework.Extensions;
 
 namespace Sample.Core.Services
@@ -12,35 +15,38 @@ namespace Sample.Core.Services
         protected (string name, string value) AuthorizationHeader { get; set; }
         protected string ContentType { get; set; }
         
-        protected async Task<HttpRequestMessage> CreateRequestMessage([CallerMemberName] string callerMemberName = "", string content = "", params object[] args)
+        protected async Task<HttpRequestMessage> CreateRequestMessage([CallerMemberName] string callerMemberName = "", params object[] args)
         {
             var method = GetType().GetMethod(callerMemberName);
             var methodParameters = method.GetParameters();
             var attributeInfo = method.GetHttpAttributeInfo();
+            var requestParameters = await SetRequestParameters(attributeInfo.Endpoint, methodParameters, args);
+            var requestUri = $"{Client.BaseAddress}{requestParameters.endpoint}";
+            var request = new HttpRequestMessage(attributeInfo.Method, requestUri);
             
-            var endpoint = await BuildEndpoint(attributeInfo.Endpoint, methodParameters, args);
-            
-            var request = new HttpRequestMessage(attributeInfo.Method, $"{Client.BaseAddress}{endpoint}");
+            if(!string.IsNullOrWhiteSpace(requestParameters.requestContent))
+                request.Content = new StringContent(requestParameters.requestContent, System.Text.Encoding.UTF8, ContentType);
             
             request.AddHeader(AuthorizationHeader);
             
-            if(!string.IsNullOrWhiteSpace(content))
-                request.Content = new StringContent(content, System.Text.Encoding.UTF8, ContentType);
-
             return request;
         }
         
-        async Task<string> BuildEndpoint(string oldEndpoint, ParameterInfo[] parameterInfo, params object[] args)
+        async Task<(string endpoint, string requestContent)> SetRequestParameters(string oldEndpoint, ParameterInfo[] parameterInfo, params object[] args)
         {
             var newEndpoint = oldEndpoint;
-            for (int i = 0; i < args.Length; i++)
+            var content = string.Empty;
+            for (var i = 0; i < args.Length; i++)
             {
-                var parameterRef = $"{{{parameterInfo[i].Name}}}";
-                if (oldEndpoint.Contains(parameterRef))
-                    newEndpoint = oldEndpoint.Replace(parameterRef, args[i].ToString());
+                var parameterName = $"{{{parameterInfo[i].Name}}}";
+                if (oldEndpoint.Contains(parameterName))
+                    newEndpoint = oldEndpoint.Replace(parameterName, args[i].ToString());
+                var parameterHasBodyAttribute = parameterInfo[i].CustomAttributes.Any(x => x.AttributeType == typeof(BodyAttribute));
+                if (parameterHasBodyAttribute)
+                    content = JsonConvert.SerializeObject(args[i]);
             }
 
-            return newEndpoint;
+            return (newEndpoint, content);
         }
 
         

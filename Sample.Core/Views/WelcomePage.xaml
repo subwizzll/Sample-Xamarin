@@ -25,10 +25,10 @@
                                 HasShadow="True">
                 <StackLayout Orientation="Horizontal">
                     <Button Text="{Binding [WelcomeButton]}"
-                            Command="{Binding GetTaxRateCommand}"
+                            Command="{Binding CalculateTaxesCommand}"
                             VerticalOptions="CenterAndExpand" 
                             HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding TaxRateInfo.StateRate}"/>
+                    <Label Text="{Binding Rate.StateRate}"/>
                 </StackLayout>
             </controls:BaseFrame>
         </StackLayout>
