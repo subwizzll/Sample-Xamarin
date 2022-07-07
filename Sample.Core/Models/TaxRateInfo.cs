@@ -1,8 +1,9 @@
+using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace Sample.Core.Models
 {
-    public class TaxRate
+    public class TaxRateInfo
     {
         [JsonProperty("city")]
         public string City { get; set; }
