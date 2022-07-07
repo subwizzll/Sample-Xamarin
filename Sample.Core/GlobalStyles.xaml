@@ -7,6 +7,10 @@
     <Style TargetType="Label">
         <Setter Property="TextColor" 
                 Value="Black"/>
+        <Setter Property="VerticalTextAlignment"
+                Value="Center"/>
+        <Setter Property="VerticalOptions"
+                Value="Center"/>
     </Style>
 
     <Style TargetType="Button">
