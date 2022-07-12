@@ -1,7 +1,7 @@
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Sample.Core.Data;
 using Sample.Core.Framework.Attributes;
 using Sample.Core.Models.Orders;
 using Sample.Core.Models.Rates;
@@ -22,8 +22,8 @@ namespace Sample.Core.Service
         {
             Client = new HttpClient();
             ContentType = "application/json";
-            Client.BaseAddress = TaxRateConfig.BaseAddress;
-            AuthorizationHeader = ("Authorization", $"Token token=\"{TaxRateConfig.PublicKey}\"");
+            Client.BaseAddress = Constants.TaxRateApi.BaseAddress;
+            AuthorizationHeader = ("Authorization", $"Token token=\"{Constants.TaxRateApi.PublicKey}\"");
         }
         
         [Get("v2/rates/{zip}")]
@@ -53,20 +53,5 @@ namespace Sample.Core.Service
             var result = JsonConvert.DeserializeObject<TaxesResponse>(jsonContent);
             return result;
         }
-        // {
-        //     var endpoint = $"api/v1/collections/";
-        //     var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-        //
-        //     queryString.Add(nameof(offset), $"{offset}");
-        //     queryString.Add(nameof(limit), $"{limit}");
-        //     
-        //     var response = await _client.GetAsync($"{endpoint}?{queryString}");
-        //     if (!response.IsSuccessStatusCode)
-        //         return null;
-        //
-        //     var jsonContent = await response.Content.ReadAsStringAsync();
-        //     var result = JsonUtilities.Deserialize<IEnumerable<OpenSeaCollections>>(jsonContent, true);
-        //     return result;
-        // }
     }
 }
