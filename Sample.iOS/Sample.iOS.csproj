@@ -78,6 +78,8 @@
     <ImageAsset Include="Assets.xcassets\CloseCross.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CoffeeBag.imageset\coffeebag.png" />
+    <ImageAsset Include="Assets.xcassets\CoffeeBag.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\InfoIcon.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
