@@ -2,6 +2,7 @@
 using MvvmCross.Navigation;
 using Sample.Core.Services;
 using System.Diagnostics;
+using Sample.Core.Models;
 using Sample.Core.Models.Orders;
 using Sample.Core.Models.Rates;
 using Sample.Core.Service;
@@ -54,5 +55,7 @@ namespace Sample.Core.ViewModels
             var taxesResponse = await _taxService.CalculateTaxes(order);
             Debug.WriteLine(taxesResponse.Tax.AmountToCollect);
         });
+
+        public Item[] Items => Data.MockItemData.SampleItems;
     }
 }

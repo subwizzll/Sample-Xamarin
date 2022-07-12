@@ -4,6 +4,7 @@
                       xmlns:controls="clr-namespace:Sample.Core.Controls"
                       xmlns:effects="clr-namespace:Sample.Core.Effects"
                       xmlns:framework="clr-namespace:Sample.Core.Framework"
+                      xmlns:models="clr-namespace:Sample.Core.Models"
                       xmlns:viewModels="clr-namespace:Sample.Core.ViewModels"
                       xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
                       x:Class="Sample.Core.Views.WelcomePage"
@@ -11,26 +12,16 @@
                       x:TypeArguments="viewModels:WelcomeViewModel"
                       NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
-        
+        <DataTemplate x:Key="ItemsTemplate"
+                      x:DataType="models:Item">
+            <controls:ShopFrame Item="{Binding .}"/>
+        </DataTemplate>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <controls:NavBar Title="{Binding [Title]}"/>
-            <controls:BaseFrame Margin="16"
-                                Padding="8"
-                                HorizontalOptions="Center"
-                                BorderColor="Black"
-                                BorderWidth="2"
-                                CornerRadius="10"
-                                HasShadow="True">
-                <StackLayout Orientation="Horizontal">
-                    <Button Text="{Binding [WelcomeButton]}"
-                            Command="{Binding CalculateTaxesCommand}"
-                            VerticalOptions="CenterAndExpand" 
-                            HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding Rate.StateRate}"/>
-                </StackLayout>
-            </controls:BaseFrame>
+            <CollectionView ItemsSource="{Binding Items}"
+                            ItemTemplate="{StaticResource ItemsTemplate}"/>
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
