@@ -4,15 +4,15 @@ namespace Sample.Core.Controls
 {
     public class BaseFrame : Frame
     {
-        public BaseFrame()
+        protected BaseFrame()
         {
             if(!IsSet(CornerRadiusProperty))
                 CornerRadius = 0;
         }
         public float BorderWidth
         {
-            get { return (float)GetValue(BorderWidthProperty); }
-            set { SetValue(BorderWidthProperty, value); }
+            get => (float)GetValue(BorderWidthProperty);
+            set => SetValue(BorderWidthProperty, value);
         }
 
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.CreateAttached(propertyName: nameof(BorderWidth),
