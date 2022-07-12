@@ -24,6 +24,11 @@
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="FontSize" Value="18" />
     </Style>
+    
+    <Style TargetType="Image">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+    </Style>
 
     <Style TargetType="StackLayout">
         <Setter Property="Spacing" Value="0"/>
