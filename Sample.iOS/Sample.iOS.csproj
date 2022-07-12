@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\BaseEntryRenderer.cs" />
     <Compile Include="Renderers\BaseFrameRenderer.cs" />
     <Compile Include="Setup.cs" />
     <None Include="Entitlements.plist" />

@@ -9,6 +9,10 @@
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
+    
+    <Style TargetType="Entry">
+        <Setter Property="Visual" Value="Base"/>
+    </Style>
 
     <Style TargetType="Button">
         <Setter Property="HeightRequest" Value="48" />
