@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controls:BaseFrame xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:Sample.Core.Controls"
+                    x:Class="Sample.Core.Controls.ItemFrame"
+                    x:DataType="controls:ItemFrame"
+                    x:Name="this">
+    <StackLayout Orientation="Horizontal"
+                 Spacing="8">
+        <Image Aspect="AspectFit"
+               WidthRequest="48"
+               Source="{Binding Item.Image}"
+               BackgroundColor="Peru"/>
+        
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="CenterAndExpand"
+                     Spacing="8"
+                     BackgroundColor="Red">
+            <Label Text="{Binding Item.Name}"/>
+            <Label Text="{Binding Item.Description}"/>
+            <ContentView Content="{Binding AuxiliaryDetailContent}"/>
+        </StackLayout>
+        <ContentView Content="{Binding AuxiliaryActionContent}"/>
+    </StackLayout>
+</controls:BaseFrame>

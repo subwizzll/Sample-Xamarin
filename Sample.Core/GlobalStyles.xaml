@@ -44,6 +44,15 @@
         <Setter Property="Padding" Value="16"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-           
+    
+    <Style TargetType="controls:ItemFrame">
+        <Setter Property="Margin" Value="8"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="BorderWidth" Value="2"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="HasShadow" Value="True"/>
+    </Style>
     
 </ResourceDictionary>
