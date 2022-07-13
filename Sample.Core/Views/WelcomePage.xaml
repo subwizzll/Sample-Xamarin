@@ -20,7 +20,8 @@
     <ContentPage.Content>
         <StackLayout>
             <controls:NavBar Title="{Binding [Title]}"/>
-            <CollectionView ItemsSource="{Binding Items}"
+            <CollectionView Margin="8"
+                            ItemsSource="{Binding Items}"
                             ItemTemplate="{StaticResource ItemsTemplate}"/>
         </StackLayout>
     </ContentPage.Content>

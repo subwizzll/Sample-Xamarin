@@ -9,13 +9,11 @@
                  Spacing="8">
         <Image Aspect="AspectFit"
                WidthRequest="48"
-               Source="{Binding Item.Image}"
-               BackgroundColor="Peru"/>
+               Source="{Binding Item.Image}"/>
         
         <StackLayout HorizontalOptions="FillAndExpand"
                      VerticalOptions="CenterAndExpand"
-                     Spacing="8"
-                     BackgroundColor="Red">
+                     Spacing="8">
             <Label Text="{Binding Item.Name}"/>
             <Label Text="{Binding Item.Description}"/>
             <ContentView Content="{Binding AuxiliaryDetailContent}"/>

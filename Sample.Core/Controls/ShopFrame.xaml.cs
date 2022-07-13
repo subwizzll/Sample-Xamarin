@@ -7,6 +7,10 @@ namespace Sample.Core.Controls
     {
         public ShopFrame() => InitializeComponent();
 
+        public string QuantityLabel => this["QuantityLabel"];
+        public string QuantityPlaceholder => this["QuantityPlaceholder"];
+        public string AddToCart => this["AddToCart"];
+
         public int Quantity
         {
             get => (int)GetValue(QuantityProperty);
@@ -17,7 +21,7 @@ namespace Sample.Core.Controls
             propertyName: nameof(Quantity),
             returnType: typeof(int),
             declaringType: typeof(ShopFrame),
-            defaultValue: null);
+            defaultValue: 1);
 
         public IMvxAsyncCommand AddToCartCommand
         {

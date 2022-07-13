@@ -6,25 +6,22 @@
                     x:Class="Sample.Core.Controls.ShopFrame"
                     x:DataType="controls:ShopFrame">
     <controls:ItemFrame.AuxiliaryDetailContent>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="{Binding Item.Price}"
-                   HorizontalOptions="StartAndExpand"/>
-            <Label Text="{Binding [QuantityLabel], Source={Reference this}}"
-                   VerticalTextAlignment="Center"
-                   VerticalOptions="Center"/>
-            <Entry Text="{Binding Quantity, Source={Reference this}}"
-                   Keyboard="Numeric"
-                   MaxLength="2"
-                   Placeholder="{Binding [QuantityPlaceholder], Source={Reference this}}"
-                   PlaceholderColor="Black"
-                   VerticalTextAlignment="Center"
-                   VerticalOptions="Center"/>
-        </StackLayout>
+        <Label Text="{Binding Item.Price, StringFormat='{0:C}'}"
+               HorizontalOptions="StartAndExpand"/>
     </controls:ItemFrame.AuxiliaryDetailContent>
     <controls:ItemFrame.AuxiliaryActionContent>
-        <Button Text="{Binding [AddToCart], Source={Reference this}}"
-                Command="{Binding AddToCartCommand, Source={Reference this}}"
-                VerticalOptions="Center"
-                HorizontalOptions="Center" />
+        <StackLayout>
+            <Button Text="{Binding AddToCart}"
+                    Command="{Binding AddToCartCommand}"/>
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding QuantityLabel}"/>
+                <Entry Text="{Binding Quantity}"
+                       Placeholder="{Binding QuantityPlaceholder}"
+                       PlaceholderColor="Black"
+                       MaxLength="2"
+                       Keyboard="Numeric"/>
+            </StackLayout>
+        </StackLayout>
     </controls:ItemFrame.AuxiliaryActionContent>
 </controls:ItemFrame>
