@@ -60,7 +60,6 @@
     
     <Style TargetType="controls:BaseFrame"
            ApplyToDerivedTypes="True">
-        <Setter Property="Margin" Value="8"/>
         <Setter Property="Padding" Value="12"/>
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
         <Setter Property="BorderColor" Value="Black"/>

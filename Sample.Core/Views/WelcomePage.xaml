@@ -14,14 +14,15 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="ItemsTemplate"
                       x:DataType="models:Item">
-            <controls:ShopFrame Item="{Binding .}"/>
+            <StackLayout Padding="8,0">
+                <controls:ShopFrame Item="{Binding .}"/>
+            </StackLayout>
         </DataTemplate>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <controls:NavBar Title="{Binding [Title]}"/>
-            <CollectionView Margin="8"
-                            ItemsSource="{Binding Items}"
+            <CollectionView ItemsSource="{Binding Items}"
                             ItemTemplate="{StaticResource ItemsTemplate}"/>
         </StackLayout>
     </ContentPage.Content>
