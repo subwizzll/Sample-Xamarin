@@ -92,6 +92,8 @@
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\MatchaBag.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\MatchaBag.imageset\matchabag.png" />
+    <ImageAsset Include="Assets.xcassets\MatchaChasen.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\MatchaChasen.imageset\matchachasen.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
       <Visible>false</Visible>

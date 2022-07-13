@@ -22,10 +22,10 @@ namespace Sample.Core.Data
             },
             new Item
             {
-                Image = "CoffeeBag",
-                Name = "Tasty Coffee",
-                Description = "The best coffee in town!",
-                Price = 1.99
+                Image = "MatchaChasen",
+                Name = "Matcha Chasen",
+                Description = "A bamboo matcha whisk, part of Chanoyu, a Japanese tea ceremony",
+                Price = 10.99
             }
         };
     }
