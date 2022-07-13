@@ -41,7 +41,7 @@ namespace Sample.iOS.Renderers
             Layer.ShadowRadius = Element.CornerRadius + 2f;
             Layer.ShadowColor = UIColor.Gray.CGColor;
             Layer.ShadowOffset = new CGSize(2, 2);
-            Layer.ShadowOpacity = .4f;
+            Layer.ShadowOpacity = .2f;
             Layer.ShadowPath = UIBezierPath.FromRect(Layer.Bounds).CGPath;
             Layer.MasksToBounds = false;
         }
