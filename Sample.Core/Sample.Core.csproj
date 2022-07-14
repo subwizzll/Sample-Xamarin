@@ -13,7 +13,8 @@
   <ItemGroup>
     <None Remove="*.json" />
     <None Remove="**\*.xaml" />
-	<EmbeddedResource Include="Resources\*.json" />
+	<EmbeddedResource Include="Resources\ViewLabels\*.json" />
+    <EmbeddedResource Include="Resources\Fonts\**\*.ttf" />
     <Compile Update="**\*.xaml.cs" DependentUpon="%(Filename)" />
     <None Remove="Xamarin.CommunityToolkit" />
   </ItemGroup>
