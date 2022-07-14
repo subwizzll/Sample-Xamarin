@@ -1,4 +1,5 @@
 using Android.Content;
+using Android.Graphics.Drawables;
 using Sample.Core.Controls;
 using Sample.Droid.Renderers;
 using Xamarin.Forms;
@@ -14,12 +15,34 @@ namespace Sample.Droid.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
-            if (e.OldElement != null) 
+            if (e.OldElement != null || Element == null)
                 return;
             
-            Control.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.Left;
-            Control.Background = null;
             Control.SetPadding(0, 0, 0, 0);
+            Control.Background = DrawBackground();
+        }
+
+        Drawable DrawBackground()
+        {
+            var background = new GradientDrawable();
+            SetBackgroundColor(ref background , Element.BackgroundColor);
+            SetCornerRadius(ref background , 4);
+            return background;
+        }
+
+        void SetBackgroundColor(ref GradientDrawable background, Color backgroundColor)
+        {
+            Control.Background = null;
+            Element.BackgroundColor = Color.Transparent;
+            backgroundColor = backgroundColor != Color.Default ? backgroundColor : Color.Transparent;
+            background.SetColor(backgroundColor.ToAndroid());
+        }
+
+        void SetCornerRadius(ref GradientDrawable background, float borderRadius)
+        {
+            var radius = Forms.Context.ToPixels(borderRadius);
+            if (radius > 0)
+                background.SetCornerRadius(radius);
         }
     }
 }

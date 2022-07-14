@@ -1,3 +1,4 @@
+using System;
 using Sample.Core.Controls;
 using Sample.iOS.Renderers;
 using UIKit;
@@ -12,9 +13,11 @@ namespace Sample.iOS.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
-            
-            if (e.NewElement != null && Control != null)
-                Control.BorderStyle = UITextBorderStyle.None;
+
+            if (e.NewElement == null || Control == null) 
+                return;
+            Control.BorderStyle = UITextBorderStyle.None;
+            Control.Layer.CornerRadius = 4f;
         }
     }
 }

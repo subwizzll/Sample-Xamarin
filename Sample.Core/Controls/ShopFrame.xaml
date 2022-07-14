@@ -6,22 +6,30 @@
                     x:Class="Sample.Core.Controls.ShopFrame"
                     x:DataType="controls:ShopFrame">
     <controls:ItemFrame.AuxiliaryDetailContent>
-        <Label Text="{Binding Item.Price, StringFormat='{0:C}'}"
-               HorizontalOptions="StartAndExpand"/>
+        <Label Text="{Binding Item.Price, StringFormat='{0:C2}'}"
+               HorizontalTextAlignment="End"
+               VerticalTextAlignment="Start"
+               Style="{StaticResource Label-Medium-Size20}"/>
     </controls:ItemFrame.AuxiliaryDetailContent>
     <controls:ItemFrame.AuxiliaryActionContent>
-        <StackLayout>
-            <Button Text="{Binding AddToCart}"
-                    Command="{Binding AddToCartCommand}"/>
+        <StackLayout Spacing="16" 
+                     Margin="0,24,0,0"
+                     Orientation="Horizontal"
+                     HorizontalOptions="EndAndExpand"
+                     VerticalOptions="EndAndExpand">
             <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="CenterAndExpand">
-                <Label Text="{Binding QuantityLabel}"/>
+                         HorizontalOptions="End">
+                <Label Text="{Binding QuantityLabel}"
+                       VerticalOptions="Center"/>
                 <Entry Text="{Binding Quantity}"
                        Placeholder="{Binding QuantityPlaceholder}"
-                       PlaceholderColor="Black"
-                       MaxLength="2"
-                       Keyboard="Numeric"/>
+                       Keyboard="Numeric"
+                       MaxLength="2"/>
             </StackLayout>
+            <Button Text="{Binding AddToCart}"
+                    Style="{StaticResource Button-Medium}"
+                    Command="{Binding AddToCartCommand}"
+                    HorizontalOptions="End"/>
         </StackLayout>
     </controls:ItemFrame.AuxiliaryActionContent>
 </controls:ItemFrame>

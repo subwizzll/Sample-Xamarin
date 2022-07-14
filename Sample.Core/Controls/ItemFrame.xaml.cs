@@ -6,7 +6,19 @@ namespace Sample.Core.Controls
     public partial class ItemFrame : BaseFrame
     {
         public ItemFrame() => InitializeComponent();
+            
+        public double PrimaryDetailWidth
+        {
+            get => (double)GetValue(PrimaryDetailWidthProperty);
+            set => SetValue(PrimaryDetailWidthProperty, value);
+        }
 
+        public static readonly BindableProperty PrimaryDetailWidthProperty = BindableProperty.CreateAttached(
+            propertyName: nameof(PrimaryDetailWidth),
+            returnType: typeof(double),
+            declaringType: typeof(ItemFrame),
+            defaultValue: WidthRequestProperty.DefaultValue);
+            
         public Item Item
         {
             get => (Item)GetValue(ItemProperty);
@@ -29,7 +41,15 @@ namespace Sample.Core.Controls
             propertyName: nameof(AuxiliaryDetailContent),
             returnType: typeof(View),
             declaringType: typeof(ItemFrame),
-            defaultValue: null);
+            defaultValue: null,
+            propertyChanged: (b, o, n) =>
+            {
+                var itemFrame = b as ItemFrame;
+                var widthValue = itemFrame.AuxiliaryDetailContent != null
+                    ? 200
+                    : PrimaryDetailWidthProperty.DefaultValue;
+                itemFrame.SetValue(PrimaryDetailWidthProperty, widthValue);
+            });
 
         public View AuxiliaryActionContent
         {
