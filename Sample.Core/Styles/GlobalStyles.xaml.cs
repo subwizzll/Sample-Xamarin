@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace Sample.Core
+namespace Sample.Core.Styles
 {
     public partial class GlobalStyles : ResourceDictionary
     {

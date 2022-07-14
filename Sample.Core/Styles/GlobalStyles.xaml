@@ -2,29 +2,41 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:controls="clr-namespace:Sample.Core.Controls" 
-                    x:Class="Sample.Core.GlobalStyles">
+                    x:Class="Sample.Core.Styles.GlobalStyles">
 
     <Style TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto-Regular"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="LineBreakMode" Value="WordWrap"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
     
     <Style TargetType="Entry">
         <Setter Property="Visual" Value="Base"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontFamily" Value="Roboto-Regular"/>
+        <Setter Property="PlaceholderColor" Value="Black"/>
+        <Setter Property="BackgroundColor" Value="LightGray"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0, 8"/>
+        <Setter Property="WidthRequest" Value="32"/>
+        <Setter Property="HeightRequest" Value="32"/>
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
 
     <Style TargetType="Button">
+        <Setter Property="FontFamily" Value="Roboto-Regular"/>
+        <Setter Property="FontSize" Value="18" />
         <Setter Property="HeightRequest" Value="48" />
-        <Setter Property="Padding" Value="8"/>
+        <Setter Property="Padding" Value="16,8"/>
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="BackgroundColor" Value="CornflowerBlue" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="FontSize" Value="18" />
     </Style>
     
     <Style TargetType="Image">
@@ -41,6 +53,15 @@
     <Style TargetType="Grid">
         <Setter Property="RowSpacing" Value="0"/>
         <Setter Property="ColumnSpacing" Value="0"/>
+    </Style>
+    
+    <Style TargetType="Frame"
+           ApplyToDerivedTypes="True">
+        <Setter Property="HasShadow" Value="False"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="IsClippedToBounds" Value="True"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
     </Style>
         
     <Style TargetType="CollectionView">
@@ -60,12 +81,13 @@
     
     <Style TargetType="controls:BaseFrame"
            ApplyToDerivedTypes="True">
-        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Padding" Value="16"/>
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
         <Setter Property="BorderColor" Value="Black"/>
         <Setter Property="BorderWidth" Value="2"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="IsClippedToBounds" Value="True"/>
     </Style>
     
 </ResourceDictionary>
