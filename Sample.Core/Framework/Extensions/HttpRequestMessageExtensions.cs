@@ -1,6 +1,6 @@
 using System.Net.Http;
 
-namespace Sample.Core.Framework.Extensions
+namespace Sample.Core.Framework
 {
     public static partial class Extensions
     {

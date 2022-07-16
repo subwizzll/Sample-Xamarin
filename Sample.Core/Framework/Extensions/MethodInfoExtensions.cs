@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Reflection;
 using Sample.Core.Framework.Attributes;
 
-namespace Sample.Core.Framework.Extensions
+namespace Sample.Core.Framework
 {
     public static partial class Extensions
     {   

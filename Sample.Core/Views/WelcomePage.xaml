@@ -11,6 +11,9 @@
                       x:DataType="viewModels:WelcomeViewModel"
                       x:TypeArguments="viewModels:WelcomeViewModel"
                       NavigationPage.HasNavigationBar="False">
+    <ContentPage.Effects>
+        <effects:SafeAreaInsetEffect/>
+    </ContentPage.Effects>
     <ContentPage.Resources>
         <DataTemplate x:Key="ItemsTemplate"
                       x:DataType="models:Item">

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Sample.Core.Framework.Attributes;
-using Sample.Core.Framework.Extensions;
+using Sample.Core.Framework;
 
 namespace Sample.Core.Services
 {
@@ -48,19 +48,5 @@ namespace Sample.Core.Services
 
             return (newEndpoint, content);
         }
-
-        
-        // async Task<string> BuildEndpoint(string oldEndpoint, ParameterInfo[] parameterInfo, params object[] args)
-        // {
-        //     var newEndpoint = oldEndpoint;
-        //     for (int i = 0; i < args.Length; i++)
-        //     {
-        //         var parameterRef = $"{{{parameterInfo[i].Name}}}";
-        //         if (oldEndpoint.Contains(parameterRef))
-        //             newEndpoint = oldEndpoint.Replace(parameterRef, args[i].ToString());
-        //     }
-        //
-        //     return newEndpoint;
-        // }
     }
 }
