@@ -1,7 +1,7 @@
 <controls:BaseFrame xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:controls="clr-namespace:Sample.Core.Controls"
+             xmlns:converters="clr-namespace:Sample.Core.Converters;assembly=Sample.Core"
              x:Class="Sample.Core.Controls.NavBar"
              x:DataType="controls:NavBar">  
     
@@ -32,7 +32,7 @@
                                       HorizontalOptions="Start"
                                       VerticalOptions="End"
                                       IsVisible="{Binding Text,
-                                                          Converter={xct:IsNotNullOrEmptyConverter},
+                                                          Converter={converters:IsNotNullOrEmptyOrZeroConverter},
                                                           Source={RelativeSource Self}}"/>
         </Grid>
     </StackLayout>
