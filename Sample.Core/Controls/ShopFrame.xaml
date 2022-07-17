@@ -29,6 +29,7 @@
             <Button Text="{Binding AddToCart}"
                     Style="{StaticResource Button-Medium}"
                     Command="{Binding AddToCartCommand}"
+                    CommandParameter="{Binding AddToCartCommandParameter}"
                     HorizontalOptions="End"/>
         </StackLayout>
     </controls:ItemFrame.AuxiliaryActionContent>

@@ -1,4 +1,5 @@
 using MvvmCross.Commands;
+using Sample.Core.Models;
 using Xamarin.Forms;
 
 namespace Sample.Core.Controls
@@ -23,16 +24,35 @@ namespace Sample.Core.Controls
             declaringType: typeof(ShopFrame),
             defaultValue: 1);
 
-        public IMvxAsyncCommand AddToCartCommand
+        public IMvxAsyncCommand<(Item item, int qty)> AddToCartCommand
         {
-            get => (IMvxAsyncCommand)GetValue(AddToCartCommandProperty);
+            get => (IMvxAsyncCommand<(Item item, int qty)>)GetValue(AddToCartCommandProperty);
             set => SetValue(AddToCartCommandProperty, value);
         }
 
         public static readonly BindableProperty AddToCartCommandProperty = BindableProperty.CreateAttached(
             propertyName: nameof(AddToCartCommand),
-            returnType: typeof(IMvxAsyncCommand),
+            returnType: typeof(IMvxAsyncCommand<(Item item, int qty)>),
             declaringType: typeof(ShopFrame),
             defaultValue: null);
+
+        public (Item item, int qty) AddToCartCommandParameter
+        {
+            get => ((Item item, int qty))GetValue(AddToCartCommandParameterProperty);
+            set => SetValue(AddToCartCommandParameterProperty, value);
+        }
+
+        public readonly BindableProperty AddToCartCommandParameterProperty = BindableProperty.CreateAttached(
+            propertyName: nameof(AddToCartCommandParameter),
+            returnType: typeof((Item item, int qty)),
+            declaringType: typeof(ShopFrame),
+            defaultValue: null);
+
+        protected override void OnPropertyChanged(string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            if (propertyName == ItemProperty.PropertyName || propertyName == QuantityProperty.PropertyName)
+                AddToCartCommandParameter = (Item, Quantity);
+        }
     }
 }
