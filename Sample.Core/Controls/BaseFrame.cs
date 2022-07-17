@@ -13,7 +13,6 @@ namespace Sample.Core.Controls
             _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
             if(!IsSet(CornerRadiusProperty))
                 CornerRadius = 0;
-            HorizontalOptions = LayoutOptions.FillAndExpand;
         }
 
         public virtual string this[string index] => GetText(GetType().Name, index);
@@ -32,9 +31,10 @@ namespace Sample.Core.Controls
             set => SetValue(BorderWidthProperty, value);
         }
 
-        public static readonly BindableProperty BorderWidthProperty = BindableProperty.CreateAttached(propertyName: nameof(BorderWidth),
-                                                                                                      returnType: typeof(float),
-                                                                                                      declaringType: typeof(BaseFrame),
-                                                                                                      defaultValue: 0f);
+        public static readonly BindableProperty BorderWidthProperty = BindableProperty.CreateAttached(
+            propertyName: nameof(BorderWidth),
+            returnType: typeof(float),
+            declaringType: typeof(BaseFrame),
+            defaultValue: 0f);
     }
 }
