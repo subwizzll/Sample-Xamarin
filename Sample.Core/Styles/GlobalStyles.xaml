@@ -1,8 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:controls="clr-namespace:Sample.Core.Controls" 
+                    xmlns:controls="clr-namespace:Sample.Core.Controls"
+                    xmlns:effects="clr-namespace:Sample.Core.Effects"
                     x:Class="Sample.Core.Styles.GlobalStyles">
+    
+    <Style TargetType="ContentPage"
+           ApplyToDerivedTypes="True">
+        <Setter Property="NavigationPage.HasNavigationBar" Value="False"/>
+        <Setter Property="effects:SafeAreaInsetEffect.InsetType" Value="Bottom"/>
+    </Style>
 
     <Style TargetType="Label">
         <Setter Property="FontFamily" Value="Roboto-Regular"/>
@@ -61,33 +68,13 @@
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="IsClippedToBounds" Value="True"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-    </Style>
-        
-    <Style TargetType="CollectionView">
-        <Setter Property="ItemsLayout">
-            <Setter.Value>
-                <LinearItemsLayout ItemSpacing="8"
-                                   Orientation="Vertical"/>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="NavBarButtonStyle"
-           TargetType="ImageButton">
-        <Setter Property="Padding" Value="16"/>
-        <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     
     <Style TargetType="controls:BaseFrame"
            ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="16"/>
-        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-        <Setter Property="BorderColor" Value="Black"/>
-        <Setter Property="BorderWidth" Value="2"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="HasShadow" Value="True"/>
-        <Setter Property="IsClippedToBounds" Value="True"/>
     </Style>
     
 </ResourceDictionary>
