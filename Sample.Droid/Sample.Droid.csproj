@@ -77,6 +77,9 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\CloseCross.png"/>
+    <AndroidResource Include="Resources\drawable\LeftArrow.png"/>
+    <AndroidResource Include="Resources\drawable\ShoppingCartIcon.png" />
     <AndroidResource Include="Resources\drawable\CoffeeBag.png" />
     <AndroidResource Include="Resources\drawable\MatchaBag.png" />
     <AndroidResource Include="Resources\drawable\MatchaChasen.png" />
@@ -96,19 +99,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\CloseCross.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Sample.Core\Sample.Core.csproj">
       <Project>{1FCB7F2A-7F02-45AF-AD83-1C3A87FE9B92}</Project>
       <Name>Sample.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\LeftArrow.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\InfoIcon.png" />
