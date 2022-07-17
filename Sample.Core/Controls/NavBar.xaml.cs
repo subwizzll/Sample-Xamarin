@@ -1,20 +1,60 @@
 ﻿using MvvmCross;
 using MvvmCross.Commands;
-using MvvmCross.Localization;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Windows.Input;
+using Sample.Core.Effects;
+using Sample.Core.Services;
 using Xamarin.Forms;
 
 namespace Sample.Core.Controls
 {
     public partial class NavBar
     {
-        public NavBar() => InitializeComponent();
+        readonly ITextProviderService _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
+        
+        public NavBar()
+        {
+            InitializeComponent();
+            CornerRadius = 0;
+            Padding = new Thickness{ Left = 12, Right = 12 };
+            SafeAreaInsetEffect.SetInsetType(this, InsetType.Top);
+            SetSafeAreaInsetEffect(SafeAreaInsetEffectEnabled);
+        }
+
+        public string this[string index] => GetText(GetType().Name, index);
+
+        string GetText(string model, string key) => _textProvider.GetText(model, key);
 
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
             child.BindingContext = this;
+        }
+
+        public bool SafeAreaInsetEffectEnabled
+        {
+            get => (bool)GetValue(SafeAreaInsetEffectEnabledProperty);
+            set => SetValue(SafeAreaInsetEffectEnabledProperty, value);
+        }
+
+        public static readonly BindableProperty SafeAreaInsetEffectEnabledProperty = BindableProperty.Create(
+            propertyName: nameof(SafeAreaInsetEffectEnabled),
+            returnType: typeof(bool),
+            declaringType: typeof(NavBar),
+            defaultValue: true,
+            propertyChanged: (b, o, n) =>
+            {
+                var navBar = b as NavBar;
+                var isEnabled = (bool)n;
+                navBar.SetSafeAreaInsetEffect(isEnabled);
+            });
+
+        void SetSafeAreaInsetEffect(bool isEnabled)
+        {
+            if (isEnabled)
+                Effects.Add(new SafeAreaInsetEffect());
+            else
+                Effects.Remove(Effects.First(x => x.GetType() == typeof(SafeAreaInsetEffect)));
         }
 
         public ImageSource NavigationIcon
@@ -29,29 +69,27 @@ namespace Sample.Core.Controls
           declaringType: typeof(NavBar),
           defaultValue: null);
 
-        public NavigationTypes NavigationState
+        public NavigationType NavigationState
         {
-            get => (NavigationTypes)GetValue(NavigationStateProperty);
+            get => (NavigationType)GetValue(NavigationStateProperty);
             set => SetValue(NavigationStateProperty, value);
         }
 
         public static readonly BindableProperty NavigationStateProperty = BindableProperty.Create(
           propertyName: nameof(NavigationState),
-          returnType: typeof(NavigationTypes),
+          returnType: typeof(NavigationType),
           declaringType: typeof(NavBar),
-          defaultValue: NavigationTypes.None,
+          defaultValue: NavigationType.None,
           propertyChanged: (b, o, n) =>
           {
               var navBar = (NavBar)b; 
-              switch ((NavigationTypes)n)
+              switch ((NavigationType)n)
               {
-                  case NavigationTypes.Back:
+                  case NavigationType.Back:
                       navBar.NavigationIcon = "LeftArrow";
                       break;
-                  case NavigationTypes.Close:
+                  case NavigationType.Close:
                       navBar.NavigationIcon = "CloseCross";
-                      break;
-                  default:
                       break;
               }
            });
@@ -63,9 +101,9 @@ namespace Sample.Core.Controls
         }
 
         public static readonly BindableProperty NavigationCommandProperty = BindableProperty.Create(
-            nameof(NavigationCommand),
-            typeof(IMvxAsyncCommand),
-            typeof(NavBar));
+            propertyName: nameof(NavigationCommand),
+            returnType: typeof(IMvxAsyncCommand),
+            declaringType: typeof(NavBar));
 
         public string Title
         {
@@ -79,57 +117,98 @@ namespace Sample.Core.Controls
             declaringType: typeof(NavBar),
             defaultValue: string.Empty);
 
-        public ICommand QuickActionsCommand
+        public ImageSource QuickActionIcon
         {
-            get => (ICommand)GetValue(QuickActionsCommandProperty);
-            set => SetValue(QuickActionsCommandProperty, value);
+            get => (ImageSource)GetValue(QuickActionIconProperty);
+            set => SetValue(QuickActionIconProperty, value);
         }
 
-        public static readonly BindableProperty QuickActionsCommandProperty = BindableProperty.Create(
-            propertyName: nameof(QuickActionsCommand),
-            returnType: typeof(ICommand),
+        public static readonly BindableProperty QuickActionIconProperty = BindableProperty.Create(
+            propertyName: nameof(QuickActionIcon),
+            returnType: typeof(ImageSource),
             declaringType: typeof(NavBar),
-            defaultValue: null,
+            defaultValue: null);
+
+        public QuickActionType QuickActionState
+        {
+            get => (QuickActionType)GetValue(QuickActionStateProperty);
+            set => SetValue(QuickActionStateProperty, value);
+        }
+
+        public static readonly BindableProperty QuickActionStateProperty = BindableProperty.Create(
+            propertyName: nameof(QuickActionState),
+            returnType: typeof(QuickActionType),
+            declaringType: typeof(NavBar),
+            defaultValue: QuickActionType.None,
             propertyChanged: (b, o, n) =>
             {
-                var header = (NavBar)b;
+                var navBar = (NavBar)b; 
+                switch ((QuickActionType)n)
+                {
+                    case QuickActionType.Info:
+                        navBar.QuickActionIcon = "InfoIcon";
+                        break;
+                    case QuickActionType.Shop:
+                        navBar.QuickActionIcon = "ShoppingCartIcon";
+                        break;
+                }
             });
 
-        public bool QuickActionsIsVisible
+        public ICommand QuickActionCommand
         {
-            get => (bool)GetValue(QuickActionsIsVisibleProperty);
-            set => SetValue(QuickActionsIsVisibleProperty, value);
+            get => (ICommand)GetValue(QuickActionCommandProperty);
+            set => SetValue(QuickActionCommandProperty, value);
         }
 
-        public static readonly BindableProperty QuickActionsIsVisibleProperty = BindableProperty.Create(
-            propertyName: nameof(QuickActionsIsVisible),
+        public static readonly BindableProperty QuickActionCommandProperty = BindableProperty.Create(
+            propertyName: nameof(QuickActionCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(NavBar),
+            defaultValue: null);
+
+        public bool IsQuickActionVisible
+        {
+            get => (bool)GetValue(IsQuickActionVisibleProperty);
+            set => SetValue(IsQuickActionVisibleProperty, value);
+        }
+
+        public static readonly BindableProperty IsQuickActionVisibleProperty = BindableProperty.Create(
+            propertyName: nameof(IsQuickActionVisible),
             returnType: typeof(bool),
             declaringType: typeof(NavBar),
             defaultValue: true);
 
-        public bool SafeAreaInsetEnabled
+        public string QuickActionDotLabel
         {
-            get => (bool)GetValue(SafeAreaInsetEnabledProperty);
-            set => SetValue(SafeAreaInsetEnabledProperty, value);
+            get => (string)GetValue(QuickActionDotLabelProperty);
+            set => SetValue(QuickActionDotLabelProperty, value);
         }
 
-        public static readonly BindableProperty SafeAreaInsetEnabledProperty = BindableProperty.Create(
-            propertyName: nameof(SafeAreaInsetEnabled),
-            returnType: typeof(bool),
+        public static readonly BindableProperty QuickActionDotLabelProperty = BindableProperty.Create(
+            propertyName: nameof(QuickActionDotLabel),
+            returnType: typeof(string),
             declaringType: typeof(NavBar),
-            defaultValue: true);
+            defaultValue: string.Empty,
+            propertyChanged: (b, o, n) =>
+            {
+                var navBar = b as NavBar;
+                var newString = n as string;
+                if (newString.Length >= 3)
+                    navBar.QuickActionDotLabel = navBar["OverOneHundred"];
+            });
 
-        public enum NavigationTypes
+        public enum NavigationType
         {
             None,
             Back,
             Close
         }
 
-        public enum RightIconState
+        public enum QuickActionType
         {
             None,
-            Info
+            Info,
+            Shop
         }
     }
 }

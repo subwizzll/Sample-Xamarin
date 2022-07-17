@@ -1,32 +1,40 @@
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+<controls:BaseFrame xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:controls="clr-namespace:Sample.Core.Controls"
-             xmlns:viewModels="clr-namespace:MvvmCross.ViewModels;assembly=MvvmCross"
              x:Class="Sample.Core.Controls.NavBar"
-             x:DataType="controls:NavBar"
-             BackgroundColor="Transparent">
-
+             x:DataType="controls:NavBar">  
+    
     <StackLayout Orientation="Horizontal"
                  VerticalOptions="Start"
                  HorizontalOptions="FillAndExpand"
                  HeightRequest="48">
 
         <!-- Navigation Icon -->
-        <ImageButton Style="{StaticResource NavBarButtonStyle}"
-                     Source="{Binding NavigationIcon}"
-                     Command="{Binding NavigationCommand}"/>
+        <ImageButton Source="{Binding NavigationIcon}"
+                     Command="{Binding NavigationCommand}"
+                     HorizontalOptions="StartAndExpand"
+                     Padding="16"/>
 
         <!-- Header -->
         <Label Text="{Binding Title}"
-               FontSize="18"
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="Center"/>
+               Style="{StaticResource Label-Size20}"/>
 
         <!-- Right Icon -->
-        <ImageButton Style="{StaticResource NavBarButtonStyle}"
-                     Source="InfoIcon"
-                     Command="{Binding QuickActionsCommand}"
-                     IsVisible="{Binding QuickActionsIsVisible}"/>
+        <Grid HorizontalOptions="EndAndExpand">
+            <ImageButton Source="{Binding QuickActionIcon}"
+                         Command="{Binding QuickActionCommand}"
+                         IsVisible="{Binding IsQuickActionVisible}"
+                         Padding="12"/>
+            
+            <controls:NotificationDot Text="{Binding QuickActionDotLabel}"
+                                      Margin="0,6"
+                                      HorizontalOptions="Start"
+                                      VerticalOptions="End"
+                                      IsVisible="{Binding Text,
+                                                          Converter={xct:IsNotNullOrEmptyConverter},
+                                                          Source={RelativeSource Self}}"/>
+        </Grid>
     </StackLayout>
 
-</ContentView>
+</controls:BaseFrame>
