@@ -7,25 +7,25 @@ namespace Sample.Core.ViewModels
     public class StoreViewModel : BaseViewModel
     {
         readonly ICartService _cartService;
+        
         public Item[] Items => Data.MockItemData.SampleItems;
 
         public Cart Cart => _cartService.Cart;
 
-        public StoreViewModel(ICartService cartService) => _cartService = cartService;
+        public StoreViewModel(ICartService cartService) 
+            => _cartService = cartService;
 
         IMvxAsyncCommand _myCartCommand;
-        public IMvxAsyncCommand MyCartCommand => _myCartCommand ??= new MvxAsyncCommand(async () =>
-        {
-            await _navigationService.Navigate<MyCartViewModel>();
-        });
+        public IMvxAsyncCommand MyCartCommand => _myCartCommand ??= new MvxAsyncCommand(async () 
+            => await _navigationService.Navigate<MyCartViewModel>());
 
-        IMvxAsyncCommand<(Item item, int qty)> _addToCartCommand;
-        public IMvxAsyncCommand<(Item item, int qty)> AddToCartCommand => _addToCartCommand ??= new MvxAsyncCommand<(Item item, int qty)>(async parameter =>
+        IMvxAsyncCommand<LineItemDetail> _addToCartCommand;
+        public IMvxAsyncCommand<LineItemDetail> AddToCartCommand => _addToCartCommand ??= new MvxAsyncCommand<LineItemDetail>(async parameter =>
         {
-            if (parameter.qty > 1)
+            if (parameter.Quantity > 1)
                 await _cartService.AddItems(parameter);
             else
-                await _cartService.AddItem(parameter.item);
+                await _cartService.AddItem(parameter.Item);
         });
     }
 }
