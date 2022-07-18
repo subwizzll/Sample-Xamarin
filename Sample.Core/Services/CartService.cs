@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Threading.Tasks;
 using Sample.Core.Models.TaxCalcStore;
+using Xamarin.CommunityToolkit.ObjectModel;
 using static Sample.Core.Framework.Extensions;
 
 namespace Sample.Core.Services
@@ -20,7 +23,23 @@ namespace Sample.Core.Services
     public class CartService : ICartService
     {
         public Cart Cart { get; set; } = new();
-        
+
+        public CartService() 
+            => Cart.Items.CollectionChanged += UpdateLineItems;
+
+        void UpdateLineItems(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var items = sender as ObservableRangeCollection<Item>;
+            var distinctItems = items.Distinct().ToList();
+            var newLineItemDetails = new ObservableRangeCollection<LineItemDetail>();
+            distinctItems.ForEach(item =>
+            {
+                var count = items.Count(x => x.Equals(item));
+                newLineItemDetails.Add(new LineItemDetail{Item = item, Quantity = count});
+            });
+            Cart.LineItems = newLineItemDetails;
+        }
+
         public async Task AddItem(Item item)
             => Cart.Items.Add(item);
 
