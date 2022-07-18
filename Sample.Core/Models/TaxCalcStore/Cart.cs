@@ -4,6 +4,22 @@ namespace Sample.Core.Models.TaxCalcStore
 {
     public class Cart
     {
-        public ObservableRangeCollection<Item> Items { get; set; } = new();
+        ObservableRangeCollection<Item> _items = new();
+        public ObservableRangeCollection<Item> Items
+        {
+            get => _items;
+            set
+            {
+                Items = value;
+                UpdateLineItems();
+            }
+        }
+
+        public ObservableRangeCollection<LineItemDetail> LineItems { get; set; } = new();
+        
+        void UpdateLineItems()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
