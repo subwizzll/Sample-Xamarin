@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Sample.Core.Framework;
 
 namespace Sample.Core.Services
@@ -12,16 +10,11 @@ namespace Sample.Core.Services
 
     public class TextProviderService : ITextProviderService
     {
+        readonly TextResourceAssembler _textResourceAssembler = new();
         readonly Dictionary<string, Dictionary<string, string>> _resources;
-        public TextProviderService()
-        {
-            var builder = new TextResourceAssembler();
-            _resources = builder.GetResources();
-        }
+        
+        public TextProviderService() => _resources = _textResourceAssembler.GetResources();
 
-        public string GetText(string viewModelName, string key)
-        {
-            return _resources[viewModelName][key];
-        }
+        public string GetText(string viewModelName, string key) => _resources[viewModelName][key];
     }
 }
