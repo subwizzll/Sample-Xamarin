@@ -1,7 +1,6 @@
-using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace Sample.Core.Models.Rates
+namespace Sample.Core.Models.TaxJar.Rates
 {
     public class Rate
     {

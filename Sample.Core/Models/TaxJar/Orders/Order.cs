@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Sample.Core.Models.Orders
+namespace Sample.Core.Models.TaxJar.Orders
 {
     public class Order
     {

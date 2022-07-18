@@ -1,9 +1,8 @@
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Sample.Core.Models.Taxes
+namespace Sample.Core.Models.TaxJar.Taxes
 {
 
     public class TaxesResponse

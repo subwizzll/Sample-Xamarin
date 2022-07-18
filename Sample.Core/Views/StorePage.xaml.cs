@@ -4,9 +4,9 @@ using Sample.Core.ViewModels;
 
 namespace Sample.Core.Views
 {
-   public partial class WelcomePage : MvxContentPage<WelcomeViewModel>
+   public partial class StorePage : MvxContentPage<StoreViewModel>
    {
-        public WelcomePage()
+        public StorePage()
         { 
             InitializeComponent();
             Effects.Add(new SafeAreaInsetEffect());

@@ -1,4 +1,4 @@
-namespace Sample.Core.Models
+namespace Sample.Core.Models.TaxCalcStore
 {
     public class Item
     {
