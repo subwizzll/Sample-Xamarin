@@ -28,7 +28,7 @@
                              NavigationCommand="{Binding BackCommand}"
                              QuickActionState="Shop"
                              QuickActionCommand="{Binding MyCartCommand}"
-                             QuickActionDotLabel="{Binding Cart.LineItems.Count}"/>
+                             QuickActionDotLabel="{Binding Cart.Items.Count}"/>
             <ScrollView>
                 <CollectionView ItemsSource="{Binding Items}"
                                 ItemTemplate="{StaticResource ItemsTemplate}"/>
