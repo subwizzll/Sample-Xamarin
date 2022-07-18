@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Sample.Core.Data;
 using Sample.Core.Framework.Attributes;
-using Sample.Core.Models.Orders;
-using Sample.Core.Models.Rates;
-using Sample.Core.Models.Taxes;
+using Sample.Core.Models.TaxJar.Orders;
+using Sample.Core.Models.TaxJar.Rates;
+using Sample.Core.Models.TaxJar.Taxes;
 using Sample.Core.Services;
 
 namespace Sample.Core.Service

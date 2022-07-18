@@ -1,4 +1,5 @@
 using Sample.Core.Models;
+using Sample.Core.Models.TaxCalcStore;
 using Xamarin.Forms;
 
 namespace Sample.Core.Controls

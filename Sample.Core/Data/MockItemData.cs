@@ -1,4 +1,4 @@
-using Sample.Core.Models;
+using Sample.Core.Models.TaxCalcStore;
 
 namespace Sample.Core.Data
 {

@@ -46,6 +46,9 @@ namespace Sample.Core.ViewModels
         }
 
         bool _isBusy;
+
+        protected BaseViewModel() { }
+
         public bool IsBusy
         {
             get => _isBusy;
