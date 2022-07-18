@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sample.Core.Models.TaxCalcStore;
 using static Sample.Core.Framework.Extensions;
@@ -8,9 +9,11 @@ namespace Sample.Core.Services
     {
         public Cart Cart { get; set; }
         public Task AddItem(Item item);
-        public Task AddItems((Item item, int qty) value);
+        public Task AddItems(LineItemDetail value);
+        public Task<Item> GetItem(Item item);
+        public Task<IEnumerable<LineItemDetail>> GetItems();
         public Task RemoveItem(Item item);
-        public Task RemoveItems((Item item, int qty) value);
+        public Task RemoveItems(LineItemDetail value);
         public Task Reset();
     }
 
@@ -21,13 +24,18 @@ namespace Sample.Core.Services
         public async Task AddItem(Item item)
             => Cart.Items.Add(item);
 
-        public async Task AddItems((Item item, int qty) value)
-            => Cart.Items.AddRange(value.item.Repeated(value.qty));
+        public async Task AddItems(LineItemDetail value)
+            => Cart.Items.AddRange(value.Item.Repeated(value.Quantity));
 
-        public Task RemoveItem(Item item)
+        public async Task<Item> GetItem(Item item)
             => throw new System.NotImplementedException();
 
-        public Task RemoveItems((Item item, int qty) value)
+        public async Task<IEnumerable<LineItemDetail>> GetItems() => Cart.LineItems;
+
+        public async Task RemoveItem(Item item)
+            => throw new System.NotImplementedException();
+
+        public async Task RemoveItems(LineItemDetail value)
             => throw new System.NotImplementedException();
 
         public async Task Reset() 
