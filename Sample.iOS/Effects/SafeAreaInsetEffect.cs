@@ -1,7 +1,7 @@
-using Sample.Core.Effects;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using Sample.Core.Framework.Effects;
 using static Sample.Core.Framework.Helpers;
 using SafeAreaInsetEffect = Sample.Core.iOS.Effects.SafeAreaInsetEffect;
 
@@ -28,7 +28,7 @@ namespace Sample.Core.iOS.Effects
 				return;
 			
 			_padding = _element.Padding;
-			_insetType = Core.Effects.SafeAreaInsetEffect.GetInsetType(Element);
+			_insetType = Core.Framework.Effects.SafeAreaInsetEffect.GetInsetType(Element);
 
 			if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
 				ApplyInsets(ref _element);

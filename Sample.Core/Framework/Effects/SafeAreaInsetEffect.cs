@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace Sample.Core.Effects
+namespace Sample.Core.Framework.Effects
 {
      public class SafeAreaInsetEffect : RoutingEffect
      {

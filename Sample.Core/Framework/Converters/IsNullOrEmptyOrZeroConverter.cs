@@ -3,7 +3,7 @@ using System.Globalization;
 using Xamarin.CommunityToolkit.Extensions.Internals;
 using Xamarin.Forms;
 
-namespace Sample.Core.Converters
+namespace Sample.Core.Framework.Converters
 {
     public class IsNullOrEmptyOrZeroConverter : ValueConverterExtension, IValueConverter
     {

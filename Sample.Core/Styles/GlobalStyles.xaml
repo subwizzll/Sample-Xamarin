@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:controls="clr-namespace:Sample.Core.Controls"
-                    xmlns:effects="clr-namespace:Sample.Core.Effects"
+                    xmlns:effects="clr-namespace:Sample.Core.Framework.Effects"
                     x:Class="Sample.Core.Styles.GlobalStyles">
     
     <Style TargetType="ContentPage"

@@ -2,7 +2,7 @@
 using MvvmCross.Commands;
 using System.Linq;
 using System.Windows.Input;
-using Sample.Core.Effects;
+using Sample.Core.Framework.Effects;
 using Sample.Core.Services;
 using Xamarin.Forms;
 
