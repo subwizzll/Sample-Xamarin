@@ -7,5 +7,9 @@ namespace Sample.Core.Models.TaxCalcStore
         public ObservableRangeCollection<Item> Items { get; set; } = new();
 
         public ObservableRangeCollection<LineItemDetail> LineItems { get; set; } = new();
+
+        public Address ToAddress { get; set; } = new();
+
+        public Address FromAddress { get; set; } = new();
     }
 }
