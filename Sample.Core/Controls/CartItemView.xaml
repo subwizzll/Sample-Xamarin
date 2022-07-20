@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<controls:ItemFrame xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:Sample.Core.Controls"
+                    x:Class="Sample.Core.Controls.ShopFrame"
+                    x:DataType="controls:ShopFrame">
+    <controls:ItemFrame.AuxiliaryDetailContent>
+        <Label Text="{Binding Item.Price, StringFormat='{0:C2}'}"
+               HorizontalTextAlignment="End"
+               VerticalTextAlignment="Start"
+               Style="{StaticResource Label-Medium-Size20}"/>
+    </controls:ItemFrame.AuxiliaryDetailContent>
+    <controls:ItemFrame.AuxiliaryActionContent>
+        <StackLayout Spacing="16" 
+                     Margin="0,24,0,0"
+                     Orientation="Horizontal"
+                     HorizontalOptions="EndAndExpand"
+                     VerticalOptions="EndAndExpand">
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="End">
+                <Label Text="{Binding QuantityLabel}"
+                       VerticalOptions="Center"/>
+                <Entry Text="{Binding Quantity}"
+                       Placeholder="{Binding QuantityPlaceholder}"
+                       Keyboard="Numeric"
+                       MaxLength="2"/>
+            </StackLayout>
+            <Button Text="{Binding AddToCart}"
+                    Style="{StaticResource Button-Medium}"
+                    Command="{Binding AddToCartCommand}"
+                    CommandParameter="{Binding AddToCartCommandParameter}"
+                    HorizontalOptions="End"/>
+        </StackLayout>
+    </controls:ItemFrame.AuxiliaryActionContent>
+</controls:ItemFrame>

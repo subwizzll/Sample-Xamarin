@@ -6,7 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <local:FontStyles/>
                 <local:GlobalStyles />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

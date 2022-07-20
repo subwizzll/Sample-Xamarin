@@ -6,16 +6,15 @@ namespace Sample.Core.Controls
 {
     public class BaseFrame : Frame
     {
-        readonly ITextProviderService _textProvider;
+        readonly ITextProviderService _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
 
         protected BaseFrame()
         {
-            _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
             if(!IsSet(CornerRadiusProperty))
                 CornerRadius = 0;
         }
 
-        public virtual string this[string index] => GetText(GetType().Name, index);
+        public string this[string index] => GetText(GetType().Name, index);
 
         string GetText(string model, string key) => _textProvider.GetText(model, key);
         
