@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using MvvmCross;
 using Sample.Core.Services;
 using Xamarin.Forms;
@@ -11,11 +12,5 @@ namespace Sample.Core.Controls
         public string this[string index] => GetText(GetType().Name, index);
 
         string GetText(string model, string key) => _textProvider.GetText(model, key);
-        
-        protected override void OnChildAdded(Element child)
-        {
-            base.OnChildAdded(child);
-            child.BindingContext = this;
-        }
     }
 }

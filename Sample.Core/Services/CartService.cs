@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Sample.Core.Services
     public interface ICartService
     {
         public Cart Cart { get; set; }
+        public Task UpdateLineItems();
+        public Task UpdateItems(LineItemDetail value);
         public Task AddItem(Item item);
         public Task AddItems(LineItemDetail value);
         public Task<Item> GetItem(Item item);
@@ -25,19 +28,35 @@ namespace Sample.Core.Services
         public Cart Cart { get; set; } = new();
 
         public CartService() 
-            => Cart.Items.CollectionChanged += UpdateLineItems;
+            => Cart.Items.CollectionChanged += CollectionChanged;
 
-        void UpdateLineItems(object sender, NotifyCollectionChangedEventArgs e)
+        async void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+            => await UpdateLineItems();
+
+        public async Task UpdateLineItems()
         {
-            var items = sender as ObservableRangeCollection<Item>;
-            var distinctItems = items.Distinct().ToList();
+            var distinctItems = Cart.Items.Distinct();
             var newLineItemDetails = new ObservableRangeCollection<LineItemDetail>();
-            distinctItems.ForEach(item =>
+            
+            foreach (var item in distinctItems)
             {
-                var count = items.Count(x => x.Equals(item));
-                newLineItemDetails.Add(new LineItemDetail{Item = item, Quantity = count});
-            });
-            Cart.LineItems = newLineItemDetails;
+                var count = Cart.Items.Count(x => x.Equals(item));
+                if (count.IsPositive())
+                    newLineItemDetails.Add(new LineItemDetail{Item = item, Quantity = count});
+            }
+            Cart.LineItems.ReplaceRange(newLineItemDetails);
+        }
+
+        public async Task UpdateItems(LineItemDetail value)
+        {
+            var currentQuantity = Cart.LineItems.First(x => x.Item.Equals(value.Item)).Quantity;
+            var quantityDifference = currentQuantity - value.Quantity;
+            var tempLineItems = new LineItemDetail{ Item = value.Item, Quantity = Math.Abs(quantityDifference) };
+            
+            if (quantityDifference.IsPositive())
+                await RemoveItems(tempLineItems);
+            else if (quantityDifference.IsNegative())
+                await AddItems(tempLineItems);
         }
 
         public async Task AddItem(Item item)
@@ -46,16 +65,17 @@ namespace Sample.Core.Services
         public async Task AddItems(LineItemDetail value)
             => Cart.Items.AddRange(value.Item.Repeated(value.Quantity));
 
-        public async Task<Item> GetItem(Item item)
-            => throw new System.NotImplementedException();
-
-        public async Task<IEnumerable<LineItemDetail>> GetItems() => Cart.LineItems;
-
         public async Task RemoveItem(Item item)
-            => throw new System.NotImplementedException();
+            => Cart.Items.Remove(Cart.Items.First(x => x.Equals(item)));
 
         public async Task RemoveItems(LineItemDetail value)
-            => throw new System.NotImplementedException();
+            =>  Cart.Items.RemoveRange(value.Item.Repeated(value.Quantity));
+
+        public async Task<Item> GetItem(Item item)
+            => Cart.Items.First(x => x == item);
+
+        public async Task<IEnumerable<LineItemDetail>> GetItems() 
+            => Cart.LineItems;
 
         public async Task Reset() 
             => Cart.Items.Clear();

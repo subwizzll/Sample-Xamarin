@@ -6,9 +6,9 @@ namespace Sample.Core.Controls
 {
     public class BaseFrame : Frame
     {
-        readonly ITextProviderService _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
+        protected readonly ITextProviderService _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
 
-        protected BaseFrame()
+        public BaseFrame()
         {
             if(!IsSet(CornerRadiusProperty))
                 CornerRadius = 0;
@@ -17,12 +17,6 @@ namespace Sample.Core.Controls
         public string this[string index] => GetText(GetType().Name, index);
 
         string GetText(string model, string key) => _textProvider.GetText(model, key);
-        
-        protected override void OnChildAdded(Element child)
-        {
-            base.OnChildAdded(child);
-            child.BindingContext = this;
-        }
 
         public float BorderWidth
         {

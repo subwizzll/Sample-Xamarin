@@ -4,5 +4,6 @@ namespace Sample.Core.Models.TaxCalcStore
     {
         public Item Item { get; set; }
         public int Quantity { get; set; }
+        public double TotalPrice => Item.Price * Quantity;
     }
 }

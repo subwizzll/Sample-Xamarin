@@ -1,28 +1,53 @@
+using System;
 using MvvmCross.Commands;
+using MvvmCross.Core;
 using Sample.Core.Models.TaxCalcStore;
 using Xamarin.Forms;
 
 namespace Sample.Core.Controls
 {
-    public partial class ShopFrame : ItemFrame
+    public partial class ShopFrame : BaseFrame
     {
         public ShopFrame() => InitializeComponent();
 
         public string QuantityLabel => this["QuantityLabel"];
-        public string QuantityPlaceholder => this["QuantityPlaceholder"];
         public string AddToCart => this["AddToCart"];
-
-        public int Quantity
+            
+        public Item Item
         {
-            get => (int)GetValue(QuantityProperty);
+            get => (Item)GetValue(ItemProperty);
+            set => SetValue(ItemProperty, value);
+        }
+
+        public static readonly BindableProperty ItemProperty = BindableProperty.CreateAttached(
+            propertyName: nameof(Item),
+            returnType: typeof(Item),
+            declaringType: typeof(ShopFrame),
+            defaultValue: null,
+            propertyChanged: (b, o, n) =>
+            {
+                var shopFrame = b as ShopFrame;
+                shopFrame.AddToCartCommandParameter.Item = shopFrame.Item;
+                shopFrame.AddToCartCommandParameter.Quantity = int.Parse(shopFrame.Quantity);
+            });
+
+        public string Quantity
+        {
+            get => (string)GetValue(QuantityProperty);
             set => SetValue(QuantityProperty, value);
         }
 
         public static readonly BindableProperty QuantityProperty = BindableProperty.CreateAttached(
             propertyName: nameof(Quantity),
-            returnType: typeof(int),
+            returnType: typeof(string),
             declaringType: typeof(ShopFrame),
-            defaultValue: 1);
+            defaultValue: "1",
+            propertyChanged: (b, o, n) =>
+            {
+                var shopFrame = b as ShopFrame;
+                int.TryParse(n as string, out var newQty);
+                shopFrame.AddToCartCommandParameter.Quantity = newQty;
+            });
 
         public IMvxAsyncCommand<LineItemDetail> AddToCartCommand
         {
@@ -47,14 +72,5 @@ namespace Sample.Core.Controls
             returnType: typeof(LineItemDetail),
             declaringType: typeof(ShopFrame),
             defaultValue: new LineItemDetail());
-
-        protected override void OnPropertyChanged(string propertyName = null)
-        {
-            base.OnPropertyChanged(propertyName);
-            if (propertyName == ItemProperty.PropertyName)
-                AddToCartCommandParameter.Item = Item;
-            else if (propertyName == QuantityProperty.PropertyName)
-                AddToCartCommandParameter.Quantity = Quantity;
-        }
     }
 }

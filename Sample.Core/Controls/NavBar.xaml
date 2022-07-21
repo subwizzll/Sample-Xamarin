@@ -3,7 +3,8 @@
              xmlns:controls="clr-namespace:Sample.Core.Controls"
              xmlns:converters="clr-namespace:Sample.Core.Framework.Converters"
              x:Class="Sample.Core.Controls.NavBar"
-             x:DataType="controls:NavBar">  
+             x:DataType="controls:NavBar"
+             x:Name="this">  
     
     <StackLayout Orientation="Horizontal"
                  VerticalOptions="Start"
@@ -11,23 +12,23 @@
                  HeightRequest="48">
 
         <!-- Navigation Icon -->
-        <ImageButton Source="{Binding NavigationIcon}"
-                     Command="{Binding NavigationCommand}"
+        <ImageButton Source="{Binding NavigationIcon, Source={x:Reference this}}"
+                     Command="{Binding NavigationCommand, Source={x:Reference this}}"
                      HorizontalOptions="StartAndExpand"
                      Padding="16"/>
 
         <!-- Header -->
-        <Label Text="{Binding Title}"
+        <Label Text="{Binding Title, Source={x:Reference this}}"
                Style="{StaticResource Label-Size20}"/>
 
         <!-- Right Icon -->
         <Grid HorizontalOptions="EndAndExpand">
-            <ImageButton Source="{Binding QuickActionIcon}"
-                         Command="{Binding QuickActionCommand}"
-                         IsVisible="{Binding IsQuickActionVisible}"
+            <ImageButton Source="{Binding QuickActionIcon, Source={x:Reference this}}"
+                         Command="{Binding QuickActionCommand, Source={x:Reference this}}"
+                         IsVisible="{Binding IsQuickActionVisible, Source={x:Reference this}}"
                          Padding="12"/>
             
-            <controls:NotificationDot Text="{Binding QuickActionDotLabel}"
+            <controls:NotificationDot Text="{Binding QuickActionDotLabel, Source={x:Reference this}}"
                                       Margin="0,6"
                                       HorizontalOptions="Start"
                                       VerticalOptions="End"

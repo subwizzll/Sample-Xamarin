@@ -22,10 +22,9 @@ namespace Sample.Core.ViewModels
         IMvxAsyncCommand<LineItemDetail> _addToCartCommand;
         public IMvxAsyncCommand<LineItemDetail> AddToCartCommand => _addToCartCommand ??= new MvxAsyncCommand<LineItemDetail>(async parameter =>
         {
-            if (parameter.Quantity > 1)
-                await _cartService.AddItems(parameter);
-            else
-                await _cartService.AddItem(parameter.Item);
+            if (parameter.Quantity < 1)
+                return;
+            await _cartService.AddItems(parameter);
         });
     }
 }

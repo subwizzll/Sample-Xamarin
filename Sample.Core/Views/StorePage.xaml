@@ -14,7 +14,9 @@
             <ContentView>
                 <controls:ShopFrame Item="{Binding .}"
                                     Margin="8"
-                                    AddToCartCommand="{Binding AddToCartCommand, Source={RelativeSource AncestorType={x:Type mvxViewModels:IMvxViewModel}}}"/>
+                                    AddToCartCommand="{Binding AddToCartCommand, 
+                                                               Source={RelativeSource 
+                                                               AncestorType={x:Type viewModels:StoreViewModel}}}"/>
             </ContentView>
         </DataTemplate>
     </ContentPage.Resources>
@@ -23,7 +25,6 @@
         <StackLayout>
             <controls:NavBar Title="{Binding [Title]}"
                              SafeAreaInsetEffectEnabled="True"
-                             NavigationCommand="{Binding BackCommand}"
                              QuickActionState="Shop"
                              QuickActionCommand="{Binding MyCartCommand}"
                              QuickActionDotLabel="{Binding Cart.Items.Count}"/>
