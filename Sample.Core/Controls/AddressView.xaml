@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controls:BaseContentView xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                          xmlns:behaviors="clr-namespace:Sample.Core.Framework.Behaviors"
+                          xmlns:controls="clr-namespace:Sample.Core.Controls"
+                          x:Class="Sample.Core.Controls.AddressView"
+                          x:DataType="controls:AddressView"
+                          x:Name="this">
+    <ContentView.Resources>
+        <Style TargetType="Label"
+               Class="AddressValueLabel">
+            <Setter Property="IsVisible" Value="{Binding IsEditMode, Source={x:Reference this}, Converter={xct:InvertedBoolConverter}}"/>
+            <Setter Property="IsEnabled" Value="{Binding IsEditMode, Source={x:Reference this}, Converter={xct:InvertedBoolConverter}}"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        <Style TargetType="Entry"
+               Class="AddressValueEntry">
+            <Setter Property="IsVisible" Value="{Binding IsEditMode, Source={x:Reference this}}"/>
+            <Setter Property="IsEnabled" Value="{Binding IsEditMode, Source={x:Reference this}}"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        <Style TargetType="xct:Expander">
+            <Setter Property="IsVisible" Value="{Binding IsEditMode, Source={x:Reference this}}"/>
+            <Setter Property="IsExpanded" Value="{Binding IsEditMode, Source={x:Reference this}}"/>
+        </Style>
+    </ContentView.Resources>
+    
+    <StackLayout Margin="8"
+                 Spacing="8">
+        <StackLayout Orientation="Horizontal">
+            <Label Text="AddressType"/>
+            <Label Text="{Binding FormattedAddress, Source={x:Reference this}}"
+                   HeightRequest="100"
+                   Style="{StaticResource Label-Size16}"
+                   StyleClass="AddressValueLabel"/>
+        </StackLayout>
+        <xct:Expander>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="TestLabel: "
+                           VerticalOptions="Center"
+                           HorizontalOptions="Start"/>
+                    <Label Text="TestValue"
+                           Style="{StaticResource Label-Size16}"
+                           StyleClass="AddressValueLabel"/>
+                    <Entry Text="TestEntry"
+                           Style="{StaticResource Entry-Size16}"
+                           StyleClass="AddressValueEntry"/>
+                </StackLayout>
+            </StackLayout>
+        </xct:Expander>
+    </StackLayout>
+</controls:BaseContentView>
