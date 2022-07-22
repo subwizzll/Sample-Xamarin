@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sample.Core.Data;
 using Sample.Core.Models.TaxCalcStore;
+using Sample.Core.Models.TaxJar.Orders;
 using Xamarin.CommunityToolkit.ObjectModel;
 using static Sample.Core.Framework.Extensions;
 
@@ -24,6 +25,9 @@ namespace Sample.Core.Services
         public Task ResetItems();
         public Task<Address> GetAddress(AddressType addressType);
         public Task SetAddress(AddressType addressType, Address address);
+        public Task<Order> CreateOrder();
+        public Task SetTaxAmount(double amount);
+        public Task<double> GetTaxAmount();
     }
 
     public class CartService : ICartService
@@ -97,5 +101,35 @@ namespace Sample.Core.Services
                 (Cart.FromAddress.City, Cart.FromAddress.State, Cart.FromAddress.Zip, Cart.FromAddress.Country)
                     = (address.City, address.State, address.Zip, address.Country);
         }
+
+        public async Task<Order> CreateOrder()
+        {
+            var order = new Order()
+            {
+                Amount = Cart.LineItems.Sum(x => x.TotalPrice),
+                FromCity = Cart.FromAddress.City,
+                FromState = Cart.FromAddress.State,
+                FromZip = Cart.FromAddress.Zip,
+                FromCountry = Cart.FromAddress.Country,
+                ToCity = Cart.ToAddress.City,
+                ToState = Cart.ToAddress.State,
+                ToZip = Cart.ToAddress.Zip,
+                ToCountry = Cart.ToAddress.Country,
+                Shipping = Cart.Shipping,
+                LineItems = Cart.LineItems.Select(x 
+                    => new LineItem
+                    {
+                        UnitPrice = x.Item.Price, 
+                        Quantity = x.Quantity
+                    }).ToArray()
+            };
+            return order;
+        }
+
+        public async Task SetTaxAmount(double amount)
+            => Cart.CollectedTax = amount;
+
+        public async Task<double> GetTaxAmount()
+            => Cart.CollectedTax;
     }
 }

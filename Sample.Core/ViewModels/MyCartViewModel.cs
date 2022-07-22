@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MvvmCross;
 using MvvmCross.Commands;
@@ -14,7 +13,6 @@ namespace Sample.Core.ViewModels
         readonly ICartService _cartService;
 
         public Cart Cart => _cartService.Cart;
-        public IEnumerable<LineItemDetail> Items { get; set; }
         public AddressViewModel ToAddressViewModel { get; set; }
         public AddressViewModel FromAddressViewModel { get; set; }
         
@@ -39,12 +37,9 @@ namespace Sample.Core.ViewModels
             };
         }
 
-        public override async void ViewAppearing()
-            => Items = await _cartService.GetItems();
-
-        // IMvxAsyncCommand _checkOutCommand;
-        // public IMvxAsyncCommand CheckOutCommand => _checkOutCommand ??= new MvxAsyncCommand(async ()
-        //     => await _navigationService.Navigate<CheckOutViewModel>());
+        IMvxAsyncCommand _checkoutCommand;
+        public IMvxAsyncCommand CheckoutCommand => _checkoutCommand ??= new MvxAsyncCommand(async ()
+            => await _navigationService.Navigate<CheckoutViewModel>());
 
         IMvxAsyncCommand<LineItemDetail> _updateCartCommand;
         public IMvxAsyncCommand<LineItemDetail> UpdateCartCommand => _updateCartCommand ??= new MvxAsyncCommand<LineItemDetail>(async parameter =>

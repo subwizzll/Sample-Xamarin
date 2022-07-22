@@ -43,7 +43,7 @@ namespace Sample.Core.Data
             City = "Arden",
             State = "NC",
             Zip = "28704",
-            Country = "USA",
+            Country = "US",
             Type = AddressType.From
         };
         
@@ -52,7 +52,7 @@ namespace Sample.Core.Data
             City = "Asheville",
             State = "NC",
             Zip = "28801",
-            Country = "USA",
+            Country = "US",
             Type = AddressType.To
         };
     }

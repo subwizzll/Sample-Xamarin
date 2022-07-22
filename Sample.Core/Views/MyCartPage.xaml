@@ -73,7 +73,7 @@
                              NavigationState="Back"
                              NavigationCommand="{Binding BackCommand}"/>
             
-            <StackLayout HeightRequest="450">
+            <StackLayout HeightRequest="0">
                 <ScrollView>
                     <CollectionView ItemsSource="{Binding Cart.LineItems}"
                                     ItemTemplate="{StaticResource MyCartTemplateSelector}"
@@ -95,6 +95,7 @@
                         <controls:AddressView BindingContext="{Binding FromAddressViewModel}"/>
                     
                         <Button Text="{Binding CheckoutButton}"
+                                Command="{Binding CheckoutCommand}"
                                 HorizontalOptions="FillAndExpand"
                                 Style="{StaticResource CheckoutButtonStyle}"/>
                     </StackLayout>

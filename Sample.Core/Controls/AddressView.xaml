@@ -60,6 +60,7 @@
                            VerticalOptions="Center"
                            HorizontalOptions="Start"/>
                     <Entry Text="{Binding EditAddress.State}"
+                           MaxLength="2"
                            Style="{StaticResource Entry-Size16}"
                            StyleClass="AddressValueEntry"/>
                 </StackLayout>
@@ -76,6 +77,7 @@
                            VerticalOptions="Center"
                            HorizontalOptions="Start"/>
                     <Entry Text="{Binding EditAddress.Country}"
+                           MaxLength="2"
                            Style="{StaticResource Entry-Size16}"
                            StyleClass="AddressValueEntry"/>
                 </StackLayout>

@@ -1,0 +1,9 @@
+{
+  "Title": "Order summary",
+  "ShippingLabel": "Shipping: ",
+  "ShippingValueLabel": "FREE",
+  "TaxLabel": "Tax: ",
+  "TotalLabel": "Total: ",
+  "TaxError": "TaxJar Request Failed",
+  "TaxErrorMessage": "Please check address input and try again."
+}
