@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MvvmCross;
 using MvvmCross.Commands;
 using Sample.Core.Services;
@@ -13,17 +14,30 @@ namespace Sample.Core.ViewModels
         readonly ICartService _cartService;
 
         public Cart Cart => _cartService.Cart;
-
         public IEnumerable<LineItemDetail> Items { get; set; }
-
+        public AddressViewModel ToAddressViewModel { get; set; }
+        public AddressViewModel FromAddressViewModel { get; set; }
+        
         public string EmptyCartLabel => this["EmptyCartLabel"];
         public string CheckoutButton 
             => string.Format(this["CheckoutButton"], Cart.Items.Count);
 
-        public bool ReadyForCheckout => Cart.Items.Count > 0;
+        public bool ShowAddressView => Cart.Items.Count > 0;
 
         public MyCartViewModel(ICartService cartService)
-            => _cartService = cartService;
+        {
+            _cartService = cartService;
+            ToAddressViewModel = new(_cartService)
+            {
+                AddressType = AddressType.To, 
+                CurrentAddress = _cartService.Cart.ToAddress
+            };
+            FromAddressViewModel = new(_cartService)
+            {
+                AddressType = AddressType.From,
+                CurrentAddress = _cartService.Cart.FromAddress
+            };
+        }
 
         public override async void ViewAppearing()
             => Items = await _cartService.GetItems();
@@ -36,17 +50,21 @@ namespace Sample.Core.ViewModels
         public IMvxAsyncCommand<LineItemDetail> UpdateCartCommand => _updateCartCommand ??= new MvxAsyncCommand<LineItemDetail>(async parameter =>
         {
             await _cartService.UpdateItems(parameter);
-            RaisePropertyChanged(nameof(ReadyForCheckout));
-            RaisePropertyChanged(nameof(CheckoutButton));
+            await RefreshCartPage();
         });
         
         IMvxAsyncCommand<LineItemDetail> _removeFromCartCommand;
         public IMvxAsyncCommand<LineItemDetail> RemoveFromCartCommand => _removeFromCartCommand ??= new MvxAsyncCommand<LineItemDetail>(async parameter =>
         {
             await _cartService.RemoveItems(parameter);
-            RaisePropertyChanged(nameof(ReadyForCheckout));
-            RaisePropertyChanged(nameof(CheckoutButton));
+            await RefreshCartPage();
         });
+
+        async Task RefreshCartPage()
+        {
+            await RaisePropertyChanged(nameof(ShowAddressView));
+            await RaisePropertyChanged(nameof(CheckoutButton));
+        }
     }
     
     public class MyCartTemplateSelector : DataTemplateSelector

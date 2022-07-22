@@ -20,6 +20,23 @@
             <Setter Property="RemoveFromCartCommand" Value="{Binding RemoveFromCartCommand,
                                                                      Source={RelativeSource AncestorType={x:Type viewModels:MyCartViewModel}}}"/>
         </Style>
+        <Style x:Key="CheckoutButtonStyle"
+               TargetType="Button">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="IsVisible" Value="False"/>
+            <Style.Triggers>
+                <MultiTrigger TargetType="Button">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding ToAddressViewModel.IsEditMode}"
+                                          Value="False" />
+                        <BindingCondition Binding="{Binding FromAddressViewModel.IsEditMode}"
+                                          Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="IsVisible" Value="True" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
         <DataTemplate x:Key="NormalTemplate"
                       x:DataType="taxCalcStore:LineItemDetail">
             <StackLayout>
@@ -40,7 +57,7 @@
                 <Label Text="{Binding EmptyCartLabel, 
                                       Source={RelativeSource AncestorType={x:Type viewModels:MyCartViewModel}}}"
                        HorizontalOptions="Center"
-                       Padding="24"/>
+                       Margin="24"/>
             </StackLayout>
         </DataTemplate>
         
@@ -55,25 +72,34 @@
                              SafeAreaInsetEffectEnabled="True"
                              NavigationState="Back"
                              NavigationCommand="{Binding BackCommand}"/>
-            <ScrollView>
-                <CollectionView ItemsSource="{Binding Cart.LineItems}"
-                                ItemTemplate="{StaticResource MyCartTemplateSelector}"
-                                EmptyViewTemplate="{StaticResource EmptyTemplate}"
-                                EmptyView=""/>
-            </ScrollView>
-            <controls:BaseFrame effects:SafeAreaInsetEffect.InsetType="Bottom"
-                                IsVisible="{Binding ReadyForCheckout}"
-                                BindingContext="{Binding .}">
-                <controls:BaseFrame.Effects>
-                    <effects:SafeAreaInsetEffect/>
-                </controls:BaseFrame.Effects>
+            
+            <StackLayout HeightRequest="450">
+                <ScrollView>
+                    <CollectionView ItemsSource="{Binding Cart.LineItems}"
+                                    ItemTemplate="{StaticResource MyCartTemplateSelector}"
+                                    EmptyViewTemplate="{StaticResource EmptyTemplate}"
+                                    EmptyView=""/>
+                </ScrollView>
+                <controls:BaseFrame effects:SafeAreaInsetEffect.InsetType="Bottom"
+                                    IsVisible="{Binding ShowAddressView}"
+                                    BindingContext="{Binding .}">
+                    <controls:BaseFrame.Effects>
+                        <effects:SafeAreaInsetEffect/>
+                    </controls:BaseFrame.Effects>
                 
-                <StackLayout>
-                    <controls:AddressView IsEditMode="True"/>
-                    <Button Text="{Binding CheckoutButton}"
-                            HorizontalOptions="FillAndExpand"/>
-                </StackLayout>
-            </controls:BaseFrame>
+                    <StackLayout Spacing="8">
+                        <controls:AddressView BindingContext="{Binding ToAddressViewModel}"/>
+                    
+                        <BoxView/>
+                    
+                        <controls:AddressView BindingContext="{Binding FromAddressViewModel}"/>
+                    
+                        <Button Text="{Binding CheckoutButton}"
+                                HorizontalOptions="FillAndExpand"
+                                Style="{StaticResource CheckoutButtonStyle}"/>
+                    </StackLayout>
+                </controls:BaseFrame>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

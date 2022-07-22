@@ -8,8 +8,8 @@ namespace Sample.Core.Models.TaxCalcStore
 
         public ObservableRangeCollection<LineItemDetail> LineItems { get; set; } = new();
 
-        public Address ToAddress { get; set; } = new();
+        public Address ToAddress { get; set; }
 
-        public Address FromAddress { get; set; } = new();
+        public Address FromAddress { get; set; }
     }
 }

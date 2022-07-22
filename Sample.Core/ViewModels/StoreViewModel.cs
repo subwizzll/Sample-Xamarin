@@ -1,4 +1,6 @@
-﻿using MvvmCross.Commands;
+﻿using System.Collections.Generic;
+using MvvmCross.Commands;
+using Sample.Core.Data;
 using Sample.Core.Services;
 using Sample.Core.Models.TaxCalcStore;
 
@@ -8,7 +10,7 @@ namespace Sample.Core.ViewModels
     {
         readonly ICartService _cartService;
         
-        public Item[] Items => Data.MockItemData.SampleItems;
+        public IEnumerable<Item> Items => MockItemData.MockItems;
 
         public Cart Cart => _cartService.Cart;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using Sample.Core.Data;
 using Sample.Core.Models.TaxCalcStore;
 using Xamarin.CommunityToolkit.ObjectModel;
 using static Sample.Core.Framework.Extensions;
@@ -20,12 +21,14 @@ namespace Sample.Core.Services
         public Task<IEnumerable<LineItemDetail>> GetItems();
         public Task RemoveItem(Item item);
         public Task RemoveItems(LineItemDetail value);
-        public Task Reset();
+        public Task ResetItems();
+        public Task<Address> GetAddress(AddressType addressType);
+        public Task SetAddress(AddressType addressType, Address address);
     }
 
     public class CartService : ICartService
     {
-        public Cart Cart { get; set; } = new();
+        public Cart Cart { get; set; } = MockItemData.MockCart;
 
         public CartService() 
             => Cart.Items.CollectionChanged += CollectionChanged;
@@ -77,7 +80,22 @@ namespace Sample.Core.Services
         public async Task<IEnumerable<LineItemDetail>> GetItems() 
             => Cart.LineItems;
 
-        public async Task Reset() 
+        public async Task ResetItems() 
             => Cart.Items.Clear();
+
+        public async Task<Address> GetAddress(AddressType addressType)
+            => addressType == AddressType.To
+                ? Cart.ToAddress
+                : Cart.FromAddress;
+
+        public async Task SetAddress(AddressType addressType, Address address)
+        {
+            if (addressType == AddressType.To)
+                (Cart.ToAddress.City, Cart.ToAddress.State, Cart.ToAddress.Zip, Cart.ToAddress.Country)
+                    = (address.City, address.State, address.Zip, address.Country);
+            else if (addressType == AddressType.From)
+                (Cart.FromAddress.City, Cart.FromAddress.State, Cart.FromAddress.Zip, Cart.FromAddress.Country)
+                    = (address.City, address.State, address.Zip, address.Country);
+        }
     }
 }
