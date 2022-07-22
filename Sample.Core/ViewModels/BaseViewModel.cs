@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MvvmCross;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -13,9 +9,9 @@ namespace Sample.Core.ViewModels
 {
     public abstract class BaseViewModel : MvxViewModel
     {
-        protected readonly ILogService _logService;
-        protected readonly ITextProviderService _textProvider;
-        protected readonly IMvxNavigationService _navigationService;
+        protected readonly ILogService _logService = Mvx.IoCProvider.Resolve<ILogService>();
+        protected readonly ITextProviderService _textProvider = Mvx.IoCProvider.Resolve<ITextProviderService>();
+        protected readonly IMvxNavigationService _navigationService = Mvx.IoCProvider.Resolve<IMvxNavigationService>();
 
         IMvxAsyncCommand _backCommand;
         public virtual IMvxAsyncCommand BackCommand => _backCommand ??= new MvxAsyncCommand(async () =>
@@ -23,20 +19,11 @@ namespace Sample.Core.ViewModels
             await _navigationService.Close(this);
         });
 
-        public string this[string index] => _textProvider.GetText(GetType().Name, index);
+        public string this[string index] => GetText(GetType().Name, index);
 
-        public virtual string GetText(string key) => GetText(GetType().Name.Replace("`1", ""), key);
+        public string GetText(string key) => GetText(GetType().Name.Replace("`1", string.Empty), key);
 
-        public virtual string GetText(string viewModel, string key) => _textProvider.GetText(viewModel, key);
-
-        protected BaseViewModel(ILogService logService,
-                                ITextProviderService textProvider,
-                                IMvxNavigationService navigationService)
-        {
-            _logService = logService;
-            _textProvider = textProvider;
-            _navigationService = navigationService;
-        }
+        public string GetText(string viewModel, string key) => _textProvider.GetText(viewModel, key);
 
         bool _isRefreshing;
         public bool IsRefreshing
@@ -55,23 +42,11 @@ namespace Sample.Core.ViewModels
 
     public abstract class BaseViewModel<TParameter> : BaseViewModel, IMvxViewModel<TParameter>
     {
-        protected BaseViewModel(ILogService logService,
-                                ITextProviderService textProvider,
-                                IMvxNavigationService navigationService) : base(logService, 
-                                                                                textProvider, 
-                                                                                navigationService) { }
-
         public abstract void Prepare(TParameter parameter);
     }
 
     public abstract class BaseViewModel<TParameter, TResult> : BaseViewModel, IMvxViewModel<TParameter, TResult>
     {
-        protected BaseViewModel(ILogService logService,
-                                ITextProviderService textProvider,
-                                IMvxNavigationService navigationService) : base(logService,
-                                                                                textProvider,
-                                                                                navigationService) { }
-
         public TaskCompletionSource<object> CloseCompletionSource { get; set; }
 
         public abstract void Prepare(TParameter parameter);
@@ -89,12 +64,6 @@ namespace Sample.Core.ViewModels
     }
     public abstract class BaseViewModelResult<TResult> : BaseViewModel, IMvxViewModelResult<TResult>
     {
-        protected BaseViewModelResult(ILogService logService,
-                                      ITextProviderService textProvider,
-                                      IMvxNavigationService navigationService) : base(logService,
-                                                                                      textProvider,
-                                                                                      navigationService) { }
-
         public TaskCompletionSource<object> CloseCompletionSource { get; set; }
         public object Result { get; set; } = default(TResult);
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Sample.Core;
-
+﻿using Sample.Core;
 using Foundation;
 using UIKit;
 using MvvmCross.Forms.Platforms.Ios.Core;

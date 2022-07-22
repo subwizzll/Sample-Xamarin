@@ -1,6 +1,7 @@
 ﻿using Sample.Core.Controls;
 using Sample.iOS.Renderers;
-using System.ComponentModel;
+using CoreGraphics;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -10,13 +11,11 @@ namespace Sample.iOS.Renderers
     public class BaseFrameRenderer : FrameRenderer
     {
         public BaseFrameRenderer()
-        {
-            Layer.CornerRadius = 0;
-        }
+            => Layer.CornerRadius = 0;
+        
         protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
             base.OnElementChanged(e);
-
 
             var frame = (BaseFrame)Element;
             if (frame == null)
@@ -27,11 +26,24 @@ namespace Sample.iOS.Renderers
                 Layer.BorderColor = frame.BorderColor.ToCGColor();
                 Layer.BorderWidth = frame.BorderWidth;
             }
-        }
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+            if (frame.CornerRadius > 0)
+                Layer.CornerRadius = frame.CornerRadius;
+        }
+        
+        public override void Draw(CGRect rect)
         {
-            base.OnElementPropertyChanged(sender, e);
+            base.Draw(rect);
+
+            if (!Element.HasShadow) 
+                return;
+            
+            Layer.ShadowRadius = Element.CornerRadius + 2f;
+            Layer.ShadowColor = UIColor.Gray.CGColor;
+            Layer.ShadowOffset = new CGSize(2, 2);
+            Layer.ShadowOpacity = .2f;
+            Layer.ShadowPath = UIBezierPath.FromRect(Layer.Bounds).CGPath;
+            Layer.MasksToBounds = false;
         }
     }
 }
