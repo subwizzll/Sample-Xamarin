@@ -2,8 +2,9 @@
   "Title": "Order summary",
   "ShippingLabel": "Shipping: ",
   "ShippingValueLabel": "FREE",
-  "TaxLabel": "Tax: ",
+  "TaxLabel": "Tax ({0:P2}): ",
   "TotalLabel": "Total: ",
   "TaxError": "TaxJar Request Failed",
-  "TaxErrorMessage": "Please check address input and try again."
+  "TaxErrorMessage": "Please check address input and try again.",
+  "OkayText": "OK"
 }

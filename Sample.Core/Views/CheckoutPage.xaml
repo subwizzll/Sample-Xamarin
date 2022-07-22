@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       xmlns:controls="clr-namespace:Sample.Core.Controls"
                       xmlns:effects="clr-namespace:Sample.Core.Framework.Effects"
                       xmlns:taxCalcStore="clr-namespace:Sample.Core.Models.TaxCalcStore"
@@ -14,8 +15,18 @@
                TargetType="StackLayout">
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
-            <Setter Property="VerticalOptions" Value="Start"/>
             <Setter Property="Margin" Value="8,0"/>
+        </Style>
+        <Style x:Key="OrderDetailLabelStyle"
+               TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="End"/>
+            <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+        </Style>
+        <Style TargetType="Label"
+               Class="OrderSummaryValueLabel">
+            <Setter Property="HorizontalTextAlignment" Value="End"/>
+            <Setter Property="WidthRequest" Value="100"/>
+            <Setter Property="HorizontalOptions" Value="End"/>
         </Style>
         
         <DataTemplate x:Key="NormalTemplate"
@@ -62,6 +73,9 @@
                              NavigationCommand="{Binding BackCommand}"
                              HasShadow="False"/>
             
+            <ActivityIndicator IsVisible="{Binding TaxJarRequestSucceeded, Converter={xct:InvertedBoolConverter}}"
+                               IsRunning="{Binding TaxJarRequestSucceeded, Converter={xct:InvertedBoolConverter}}"/>
+            
             <StackLayout HeightRequest="0"
                          IsVisible="{Binding TaxJarRequestSucceeded}">
                 <ScrollView >
@@ -82,27 +96,24 @@
                         <BoxView />
                         <StackLayout Style="{StaticResource OrderDetailLayoutStyle}">
                             <Label Text="{Binding ShippingLabel}"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Start"/>
+                                   Style="{StaticResource OrderDetailLabelStyle}"/>
                             <Label Text="{Binding ShippingValueLabel}"
                                    Style="{StaticResource Label-Medium-Size20}"
-                                   StyleClass="AddressValueEntry"/>
+                                   StyleClass="OrderSummaryValueLabel"/>
                         </StackLayout>
                         <StackLayout Style="{StaticResource OrderDetailLayoutStyle}">
                             <Label Text="{Binding TaxLabel}"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Start"/>
+                                   Style="{StaticResource OrderDetailLabelStyle}"/>
                             <Label Text="{Binding Cart.CollectedTax, StringFormat='{0:C2}'}"
                                    Style="{StaticResource Label-Medium-Size20}"
-                                   StyleClass="AddressValueEntry"/>
+                                   StyleClass="OrderSummaryValueLabel"/>
                         </StackLayout>
                         <StackLayout Style="{StaticResource OrderDetailLayoutStyle}">
                             <Label Text="{Binding TotalLabel}"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Start"/>
+                                   Style="{StaticResource OrderDetailLabelStyle}"/>
                             <Label Text="{Binding Cart.TotalPrice, StringFormat='{0:C2}'}"
                                    Style="{StaticResource Label-Medium-Size20}"
-                                   StyleClass="AddressValueEntry"/>
+                                   StyleClass="OrderSummaryValueLabel"/>
                         </StackLayout>
                         <BoxView />
                     </StackLayout>

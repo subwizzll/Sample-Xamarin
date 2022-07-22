@@ -49,7 +49,6 @@
                 <BoxView/>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding CityLabel}"
-                           VerticalOptions="Center"
                            HorizontalOptions="Start"/>
                     <Entry Text="{Binding EditAddress.City}"
                            Style="{StaticResource Entry-Size16}"
@@ -57,7 +56,6 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding StateLabel}"
-                           VerticalOptions="Center"
                            HorizontalOptions="Start"/>
                     <Entry Text="{Binding EditAddress.State}"
                            MaxLength="2"
@@ -66,7 +64,6 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding ZipLabel}"
-                           VerticalOptions="Center"
                            HorizontalOptions="Start"/>
                     <Entry Text="{Binding EditAddress.Zip}"
                            Style="{StaticResource Entry-Size16}"
@@ -74,7 +71,6 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding CountryLabel}"
-                           VerticalOptions="Center"
                            HorizontalOptions="Start"/>
                     <Entry Text="{Binding EditAddress.Country}"
                            MaxLength="2"

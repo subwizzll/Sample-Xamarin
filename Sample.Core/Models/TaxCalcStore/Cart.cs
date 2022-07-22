@@ -15,6 +15,8 @@ namespace Sample.Core.Models.TaxCalcStore
 
         public double Shipping { get; set; }
         
+        public double TaxRate { get; set; }
+        
         public double CollectedTax { get; set; }
 
         public double TotalPrice => LineItems.Sum(x => x.TotalPrice) + Shipping + CollectedTax;

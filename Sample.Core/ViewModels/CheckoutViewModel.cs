@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Sample.Core.Models.TaxCalcStore;
 using Sample.Core.Service;
@@ -18,7 +19,7 @@ namespace Sample.Core.ViewModels
             ? _cartService.Cart.Shipping.ToString("C2")
             : this["ShippingValueLabel"];
 
-        public string TaxLabel => this["TaxLabel"];
+        public string TaxLabel => string.Format(this["TaxLabel"], _cartService.Cart.TaxRate);
         public string TotalLabel => this["TotalLabel"];
         
         public CheckoutViewModel(ICartService cartService, ITaxService taxService)
@@ -33,19 +34,23 @@ namespace Sample.Core.ViewModels
         async Task LoadOrderSummary()
         {
             var order = await _cartService.CreateOrder();
-            var response = await _taxService.CalculateTaxes(order);
+            var taxResponse = await _taxService.CalculateTaxes(order);
+            var rateResponse = await _taxService.GetTaxRate(order.ToZip);
             
-            if (response == null)
+            if (taxResponse == null || rateResponse == null)
             {
                 Application.Current.MainPage
-                    .DisplayAlert(this["TaxError"], this["TaxErrorMessage"], "OK")
+                    .DisplayAlert(this["TaxError"], this["TaxErrorMessage"], this["OkText"])
                     .ContinueWith(BackCommand.Execute);
                 return;
             }
 
-            var taxAmount = response.Tax.AmountToCollect;
+            var taxAmount = taxResponse.Tax.AmountToCollect;
+            var taxRate = rateResponse.Rate.CombinedRate;
+            await _cartService.SetTaxRate(Double.Parse(taxRate));
             await _cartService.SetTaxAmount(taxAmount);
             RaisePropertyChanged(nameof(Cart));
+            RaisePropertyChanged(nameof(TaxLabel));
             TaxJarRequestSucceeded = true;
         }
 

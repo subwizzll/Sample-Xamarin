@@ -26,8 +26,8 @@ namespace Sample.Core.Services
         public Task<Address> GetAddress(AddressType addressType);
         public Task SetAddress(AddressType addressType, Address address);
         public Task<Order> CreateOrder();
+        public Task SetTaxRate(double rate);
         public Task SetTaxAmount(double amount);
-        public Task<double> GetTaxAmount();
     }
 
     public class CartService : ICartService
@@ -126,10 +126,10 @@ namespace Sample.Core.Services
             return order;
         }
 
+        public async Task SetTaxRate(double rate)
+            => Cart.TaxRate = rate;
+
         public async Task SetTaxAmount(double amount)
             => Cart.CollectedTax = amount;
-
-        public async Task<double> GetTaxAmount()
-            => Cart.CollectedTax;
     }
 }
