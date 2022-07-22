@@ -27,7 +27,7 @@
                              SafeAreaInsetEffectEnabled="True"
                              QuickActionState="Shop"
                              QuickActionCommand="{Binding MyCartCommand}"
-                             QuickActionDotLabel="{Binding Cart.Items.Count}"/>
+                             QuickActionLabel="{Binding Cart.Items.Count}"/>
             <ScrollView>
                 <CollectionView ItemsSource="{Binding Items}"
                                 ItemTemplate="{StaticResource ItemsTemplate}"/>

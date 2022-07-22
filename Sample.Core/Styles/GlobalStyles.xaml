@@ -51,7 +51,6 @@
         <Setter Property="BackgroundColor" Value="CornflowerBlue" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="IsEnabled" Value="True" />
     </Style>
 
     <Style x:Key="ButtonGray"

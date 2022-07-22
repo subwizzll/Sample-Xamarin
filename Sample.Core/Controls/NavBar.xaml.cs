@@ -178,14 +178,14 @@ namespace Sample.Core.Controls
             declaringType: typeof(NavBar),
             defaultValue: true);
 
-        public string QuickActionDotLabel
+        public string QuickActionLabel
         {
-            get => (string)GetValue(QuickActionDotLabelProperty);
-            set => SetValue(QuickActionDotLabelProperty, value);
+            get => (string)GetValue(QuickActionLabelProperty);
+            set => SetValue(QuickActionLabelProperty, value);
         }
 
-        public static readonly BindableProperty QuickActionDotLabelProperty = BindableProperty.Create(
-            propertyName: nameof(QuickActionDotLabel),
+        public static readonly BindableProperty QuickActionLabelProperty = BindableProperty.Create(
+            propertyName: nameof(QuickActionLabel),
             returnType: typeof(string),
             declaringType: typeof(NavBar),
             defaultValue: string.Empty,
@@ -193,8 +193,8 @@ namespace Sample.Core.Controls
             {
                 var navBar = b as NavBar;
                 var newString = n as string;
-                if (newString.Length >= 3)
-                    navBar.QuickActionDotLabel = navBar["OverOneHundred"];
+                if (newString.Length >= 3 && navBar.QuickActionState == QuickActionType.Shop)
+                    navBar.QuickActionLabel = navBar["OverOneHundred"];
             });
 
         public enum NavigationType
